@@ -1,3 +1,8 @@
+## Ветки:
+
+- `main`: основная ветка для работы с React-компонентами и логикой.
+- `html-css`: ветка для работы с HTML и CSS.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
