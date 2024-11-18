@@ -1,0 +1,44 @@
+.ctg_container {
+  max-width: 1198px;
+  height: 63px;
+  margin-top: 20px;
+  margin-right: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.knopochka {
+  max-width: 233px;
+  padding: 10px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  font-size: 22px;
+  font-weight: 500;
+  border: 2px solid black;
+  border-radius: 69px;
+  background-color: white;
+  box-shadow: 3px 3px #cbcbcb;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: rgb(234, 231, 231);
+  }
+
+  .icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.active {
+  img {
+    filter: brightness(0) invert(1) !important;
+  }
+
+  background-color: black !important;
+  color: white !important;
+}
