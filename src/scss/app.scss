@@ -1,1 +1,11 @@
 @import './libs/normalize';
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+.app-container {
+  max-width: 1300px;
+  min-height: 100vh;
+  margin: 26px auto;
+}
