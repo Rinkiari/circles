@@ -1,0 +1,26 @@
+.event_card {
+  width: 420px;
+  height: auto;
+
+  h2 {
+    margin-top: 16px;
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  p {
+    margin-top: 6px;
+    font-size: 22px;
+    font-weight: 500;
+    color: #626262;
+  }
+}
+
+.event_image {
+  width: 411px;
+  height: 239px;
+  border-radius: 69px;
+  object-fit: cover;
+  border: 6px solid black;
+  box-shadow: 9px 9px #cbcbcb;
+}

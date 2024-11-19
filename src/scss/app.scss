@@ -9,3 +9,12 @@ body {
   min-height: 100vh;
   margin: 26px auto;
 }
+
+.event_container {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 8px;
+  grid-row-gap: 18px;
+}

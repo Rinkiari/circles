@@ -2,12 +2,30 @@ import React from 'react';
 import '../scss/app.scss';
 
 import Categories from '../components/Categories';
+import EventCard from '../components/EventCard';
 
 const Home = () => {
   const [categoryId, setCategoryId] = React.useState(0); //состояние категорий
-  console.log(categoryId);
+  const [events, setEvent] = React.useState([]);
 
-  return <Categories value={categoryId} onClickCategory={(i) => setCategoryId(i)} />;
+  React.useEffect(() => {
+    fetch('https://e895c70e3c56e1a7.mokky.dev/events')
+      .then((res) => res.json())
+      .then((jsonRes) => {
+        setEvent(jsonRes);
+      });
+  }, []);
+
+  return (
+    <>
+      <Categories value={categoryId} onClickCategory={(i) => setCategoryId(i)} />
+      <div className="event_container">
+        {events.map((obj) => (
+          <EventCard key={obj.id} {...obj} />
+        ))}
+      </div>
+    </>
+  );
 };
 
 export default Home;
