@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log in</title>
+    <link rel="stylesheet" href="./stili.css" />
+  </head>
+  <body>
+    <div class="background">
+      <div class="auth-box">
+          <!-- Навигация -->
+          <div class="auth-tabs">
+              <span class="tab active" data-target="login">ВХОД</span>
+              <span class="tab" data-target="register">РЕГИСТРАЦИЯ</span>
+          </div>
+          <hr class="divider">
+
+          <!-- Форма входа -->
+          <div class="form-container login-form">
+              <form>
+                  <input type="text" placeholder="Логин" class="input-field" required>
+                  <input type="password" placeholder="Пароль" class="input-field" required>
+                  <button type="submit" class="submit-btn">Продолжить</button>
+              </form>
+          </div>
+
+          <!-- Форма регистрации -->
+          <div class="form-container register-form hidden">
+              <form>
+                  <input type="text" placeholder="Логин" class="input-field" required>
+                  <input type="password" placeholder="Пароль" class="input-field" required>
+                  <input type="password" placeholder="Ещё раз пароль" class="input-field" required>
+                  <input type="email" placeholder="Email" class="input-field" required>
+                  <button type="submit" class="submit-btn">Продолжить</button>
+              </form>
+          </div>
+      </div>
+  </div>
+  <script src="script.js"></script>
+
+  </body>
+</html>
