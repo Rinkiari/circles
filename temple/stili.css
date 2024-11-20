@@ -1,7 +1,111 @@
-body {
-  padding: 0;
+/* Обнуление стилей (убирай / оставляй как тебе удобно) --> */
+/* Общие стили */
+body,
+html {
   margin: 0;
-  box-sizing: border-box;
-  list-style: none;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #93d9ff, #ffde85, #ff7f7f);
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+/* Контейнер для фона */
+.background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Окно авторизации */
+.auth-box {
+  background: white;
+  border-radius: 50px;
+  border: 4px solid black; /* Увеличенная черная обводка окна */
+  padding: 20px;
+  width: 320px; /* Узкое окно */
+  box-shadow: 10px 5px 0px rgba(0, 0, 0, 0.3), 0px 5px 10px rgba(0, 0, 0, 0.2); /* Тень справа и снизу */
+}
+
+/* Заголовки "Вход" и "Регистрация" */
+.auth-tabs {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.tab {
+  cursor: pointer;
+  color: #aaa;
+}
+
+.tab.active {
+  color: black;
+}
+
+/* Толстая черная полоса под заголовками */
+.divider {
+  border: none;
+  height: 4px; /* Полоса по ширине соизмеримая с обводкой окна */
+  background: black;
+  margin: 0 auto 20px auto;
+  width: calc(100% - 40px);
+  margin-bottom: 30px;
+}
+
+/* Формы */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 20px;
+}
+
+/* Поля ввода */
+.input-field {
+  border: 3px solid black; /* Черная обводка полей */
+  border-radius: 50px;
+  padding: 12px;
+  margin-bottom: 20px;
+  font-size: 16px;
   outline: none;
+  width: calc(100% - 30px); /* Растягиваем поля ввода */
+  max-width: 280px; /* Максимальная ширина */
+  color: #aaa; /* Серый шрифт */
+  font-weight: 700; /* Шрифт как у заголовков */
+}
+
+/* Кнопка */
+.submit-btn {
+  border: 3px solid black; /* Черная обводка кнопки */
+  border-radius: 50px;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  background: black;
+  cursor: pointer;
+  width: calc(100% - 0px); /* Соизмеримо с полями ввода */
+  max-width: 280px;
+  text-align: center;
+  margin-top: 30px;
+  transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+  background: white;
+  color: black;
+}
+
+/* Скрытые элементы */
+.hidden {
+  display: none;
 }
