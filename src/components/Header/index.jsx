@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styles from './Header.module.scss';
 
 import Search from '../Search';
@@ -12,7 +13,9 @@ const Header = () => {
 
         <div className={styles.right_side}>
           <Search />
-          <p className={styles.loginlink}>ВОЙТИ</p>
+          <Link to="/login">
+            <p className={styles.loginlink}>ВОЙТИ</p>
+          </Link>
         </div>
       </div>
     </div>

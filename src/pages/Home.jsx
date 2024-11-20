@@ -1,6 +1,7 @@
 import React from 'react';
 import '../scss/app.scss';
 
+import Header from '../components/Header';
 import Categories from '../components/Categories';
 import EventCard from '../components/EventCard';
 
@@ -18,6 +19,7 @@ const Home = () => {
 
   return (
     <>
+      <Header />
       <Categories value={categoryId} onClickCategory={(i) => setCategoryId(i)} />
       <div className="event_container">
         {events.map((obj) => (

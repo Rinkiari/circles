@@ -1,0 +1,101 @@
+a {
+  text-decoration: none;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  box-sizing: content-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #93d9ff, #ffde85, #ff7f7f);
+}
+
+.back_btn {
+  position: absolute;
+  top: 22px;
+  left: 12px;
+  width: 64px;
+  cursor: pointer;
+}
+
+.authBox {
+  background: white;
+  border-radius: 50px;
+  border: 4px solid black;
+  padding: 20px;
+  width: 410px;
+  box-shadow: 10px 5px 0px rgba(0, 0, 0, 0.3), 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.authTabs {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 26px;
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.tab {
+  cursor: pointer;
+  color: #aaa;
+
+  &.active {
+    color: black;
+  }
+}
+
+.divider {
+  border: none;
+  height: 4px;
+  background: black;
+  margin: 0 auto 20px auto;
+  width: 310px;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 20px;
+}
+
+.inputField {
+  border: 3px solid black;
+  border-radius: 50px;
+  padding: 12px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  outline: none;
+  width: 100%;
+  color: #aaa;
+  font-weight: 700;
+}
+
+.submitBtn {
+  border: 3px solid black;
+  border-radius: 50px;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  background: black;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: white;
+    color: black;
+  }
+}
