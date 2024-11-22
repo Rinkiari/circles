@@ -12,7 +12,9 @@ const Header = () => {
     <div className={styles.root}>
       <div className={styles.panel_container}>
         <div className={styles.left_side}>
-          <h1>C I R C L E S</h1>
+          <Link to="/">
+            <h1>C I R C L E S</h1>
+          </Link>
         </div>
 
         <div className={styles.right_side}>
@@ -22,7 +24,9 @@ const Header = () => {
               <p className={styles.loginlink}>ВОЙТИ</p>
             </Link>
           ) : (
-            <img src={acc_icon} className={styles.account_icon} alt="icon" />
+            <Link to="/myprofile">
+              <img src={acc_icon} className={styles.account_icon} alt="icon" />
+            </Link>
           )}
         </div>
       </div>

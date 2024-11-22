@@ -4,6 +4,7 @@ import './scss/app.scss';
 
 import Home from './pages/Home';
 import LogReg from './pages/LogReg';
+import MyProfile from './pages/MyProfile';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LogReg />} />
+        <Route path="/myprofile" element={<MyProfile />} />
       </Routes>
     </div>
   );
