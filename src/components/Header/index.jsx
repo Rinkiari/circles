@@ -1,17 +1,18 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { LoginContext } from '../../App';
+import { useContext } from 'react';
 import styles from './Header.module.scss';
 import acc_icon from './account_icon.png';
 
 import Search from '../Search';
 
 const Header = () => {
-  const [isLogged, setIsLogged] = useState(true);
   const location = useLocation();
-  console.log(`location: ${location.pathname}`);
-
+  // console.log(`location: ${location.pathname}`);
   const pageClass = location.pathname === '/' ? 'home' : location.pathname.slice(1);
+
+  const { isLogged, setIsLogged } = useContext(LoginContext);
 
   return (
     <div className={styles.root}>
@@ -30,7 +31,12 @@ const Header = () => {
             </Link>
           ) : (
             <Link to="/myprofile">
-              <img src={acc_icon} className={styles.account_icon} alt="icon" />
+              <img
+                onClick={() => setIsLogged(!isLogged)}
+                src={acc_icon}
+                className={styles.account_icon}
+                alt="icon"
+              />
             </Link>
           )}
         </div>

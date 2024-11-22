@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
 import styles from './LogOnBlock.module.scss';
 import backIcon from './back.png';
 
+import { LoginContext } from '../../App';
+
 const LogOnBlock = () => {
   const [activeTab, setActiveTab] = useState('login');
+
+  const { isLogged, setIsLogged } = useContext(LoginContext);
 
   return (
     <div className={styles.background}>
@@ -33,7 +38,10 @@ const LogOnBlock = () => {
             <form>
               <input type="text" placeholder="Логин" className={styles.inputField} required />
               <input type="password" placeholder="Пароль" className={styles.inputField} required />
-              <button type="submit" className={styles.submitBtn}>
+              <button
+                onClick={() => setIsLogged(!isLogged)}
+                type="submit"
+                className={styles.submitBtn}>
                 Продолжить
               </button>
             </form>
@@ -53,7 +61,10 @@ const LogOnBlock = () => {
                 required
               />
               <input type="email" placeholder="Email" className={styles.inputField} required />
-              <button type="submit" className={styles.submitBtn}>
+              <button
+                onClick={() => setIsLogged(!isLogged)}
+                type="submit"
+                className={styles.submitBtn}>
                 Продолжить
               </button>
             </form>
