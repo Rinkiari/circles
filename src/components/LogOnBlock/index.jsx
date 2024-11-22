@@ -38,12 +38,14 @@ const LogOnBlock = () => {
             <form>
               <input type="text" placeholder="Логин" className={styles.inputField} required />
               <input type="password" placeholder="Пароль" className={styles.inputField} required />
-              <button
-                onClick={() => setIsLogged(!isLogged)}
-                type="submit"
-                className={styles.submitBtn}>
-                Продолжить
-              </button>
+              <Link to="/">
+                <button
+                  onClick={() => setIsLogged(!isLogged)}
+                  type="submit"
+                  className={styles.submitBtn}>
+                  Продолжить
+                </button>
+              </Link>
             </form>
           </div>
         )}
@@ -61,12 +63,14 @@ const LogOnBlock = () => {
                 required
               />
               <input type="email" placeholder="Email" className={styles.inputField} required />
-              <button
-                onClick={() => setIsLogged(!isLogged)}
-                type="submit"
-                className={styles.submitBtn}>
-                Продолжить
-              </button>
+              <Link to="/">
+                <button
+                  onClick={() => setIsLogged(!isLogged)}
+                  type="submit"
+                  className={styles.submitBtn}>
+                  Продолжить
+                </button>
+              </Link>
             </form>
           </div>
         )}
