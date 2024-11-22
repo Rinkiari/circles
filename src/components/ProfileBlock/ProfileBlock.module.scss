@@ -98,6 +98,43 @@
     }
   }
 
+  hr {
+    width: 100%;
+    border: 1px solid #cbcbcb;
+    margin: 40px auto;
+  }
+
   .projects_container {
+    width: 100%;
+
+    .top_innerPrContainer {
+      width: 906px;
+      height: 46px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      h3 {
+        font-size: 32px;
+        font-weight: 700;
+      }
+
+      p {
+        font-size: 22px;
+        font-weight: 600px;
+        cursor: pointer;
+        color: #969696;
+      }
+    }
+
+    .bottom_innerPrContainer {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(1, 1fr);
+      grid-column-gap: 8px;
+      grid-row-gap: 18px;
+    }
   }
 }

@@ -1,26 +1,49 @@
 .event_card {
-  width: 420px;
-  height: auto;
+  &.home {
+    width: 420px;
+    height: auto;
 
-  h2 {
-    margin-top: 16px;
-    font-size: 22px;
-    font-weight: 700;
+    h2 {
+      margin-top: 16px;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    p {
+      margin-top: 6px;
+      font-size: 22px;
+      font-weight: 500;
+      color: #626262;
+    }
   }
 
-  p {
-    margin-top: 6px;
-    font-size: 22px;
-    font-weight: 500;
-    color: #626262;
+  &.myprofile {
+    width: 284px;
+    max-height: 220px;
+
+    h2 {
+      margin-top: 16px;
+      font-size: 20px;
+      font-weight: 700;
+    }
   }
 }
 
 .event_image {
-  width: 411px;
-  height: 239px;
-  border-radius: 69px;
   object-fit: cover;
-  border: 6px solid black;
-  box-shadow: 9px 9px #cbcbcb;
+
+  &.home {
+    width: 411px;
+    height: 239px;
+    border-radius: 69px;
+    border: 6px solid black;
+    box-shadow: 9px 9px #cbcbcb;
+  }
+  &.myprofile {
+    width: 278px;
+    height: 162px;
+    border-radius: 50px;
+    border: 4px solid black;
+    box-shadow: 6px 6px #cbcbcb;
+  }
 }
