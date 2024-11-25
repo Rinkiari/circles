@@ -6,6 +6,7 @@ import './scss/app.scss';
 import Home from './pages/Home';
 import LogReg from './pages/LogReg';
 import MyProfile from './pages/MyProfile';
+import Profile from './pages/Profile';
 
 export const LoginContext = createContext();
 
@@ -20,6 +21,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LogReg />} />
           <Route path="/myprofile" element={<MyProfile />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </LoginContext.Provider>
     </div>

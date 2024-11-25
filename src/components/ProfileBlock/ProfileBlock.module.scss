@@ -50,6 +50,12 @@
       justify-content: space-between;
 
       .left_side_container {
+        img {
+          width: 547px;
+          height: 312px;
+          border: 4px solid black;
+          border-radius: 69px;
+        }
       }
 
       .right_side_container {
@@ -58,16 +64,23 @@
         flex-direction: column;
         justify-content: space-between;
 
-        button {
+        .btn {
           width: 303px;
           height: 68px;
           border: 4px solid black;
           border-radius: 48px;
           color: white;
-          background-color: #ec946b;
           font-size: 32px;
           font-weight: 700;
           cursor: pointer;
+
+          &.profile {
+            background-color: #70aaf6;
+          }
+
+          &.myprofile {
+            background-color: #ec946b;
+          }
         }
 
         .bio_block {
@@ -101,7 +114,7 @@
   hr {
     width: 100%;
     border: 1px solid #cbcbcb;
-    margin: 40px auto;
+    margin: 30px auto;
   }
 
   .projects_container {
