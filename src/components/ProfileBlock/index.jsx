@@ -24,8 +24,14 @@ const ProfileBlock = ({ value }) => {
       <div className={styles.profile_container}>
         <div className={styles.top_innerContainer}>
           <h3>{profile.name}</h3>
-          <button className={styles.edit_button}>Редактировать профиль</button>
-          <img src={settings} alt="settings" className={styles.settings_icon} />
+          <button className={`${styles.edit_button} ${styles[pageClass]}`}>
+            Редактировать профиль
+          </button>
+          <img
+            src={settings}
+            alt="settings"
+            className={`${styles.settings_icon} ${styles[pageClass]}`}
+          />
         </div>
         <div className={styles.bottom_innerContainer}>
           <div className={styles.left_side_container}>
