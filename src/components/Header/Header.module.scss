@@ -27,6 +27,10 @@
     background-image: linear-gradient(0.25turn, #70aaf6 0%, #70aaf6 100%);
   }
 
+  &.event {
+    background-image: linear-gradient(0.25turn, #77a984 0%, #77a984 100%);
+  }
+
   .left_side {
     display: flex;
     align-items: center;

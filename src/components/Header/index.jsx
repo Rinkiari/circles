@@ -9,8 +9,12 @@ import Search from '../Search';
 
 const Header = () => {
   const location = useLocation();
-  // console.log(`location: ${location.pathname}`);
-  const pageClass = location.pathname === '/' ? 'home' : location.pathname.slice(1);
+  const pageClass =
+    location.pathname === '/'
+      ? 'home'
+      : location.pathname.startsWith('/event')
+      ? 'event'
+      : location.pathname.slice(1);
 
   const { isLogged, setIsLogged } = useContext(LoginContext);
 

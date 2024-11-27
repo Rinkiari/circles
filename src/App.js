@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import LogReg from './pages/LogReg';
 import MyProfile from './pages/MyProfile';
 import Profile from './pages/Profile';
+import Event from './pages/Event';
 
 export const LoginContext = createContext();
 
@@ -22,6 +23,7 @@ function App() {
           <Route path="/login" element={<LogReg />} />
           <Route path="/myprofile" element={<MyProfile />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/event/:id" element={<Event />} />
         </Routes>
       </LoginContext.Provider>
     </div>

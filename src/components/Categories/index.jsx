@@ -7,9 +7,10 @@ import games from './assets/games_icon.svg';
 import kino from './assets/kino_icon.svg';
 import dots from './assets/dots_icon.svg';
 
+export const svg_iconsArr = [brush, ball, show, leafs, games, kino, dots];
+
 const Categories = ({ value, onClickCategory }) => {
   const categoriesArr = ['ТВОРЧЕСТВО', 'СПОРТ', 'ШОУ', 'ПРИРОДА', 'ИГРЫ', 'КИНО', ''];
-  const svg_iconsArr = [brush, ball, show, leafs, games, kino, dots];
 
   return (
     <div className={styles.ctg_container}>

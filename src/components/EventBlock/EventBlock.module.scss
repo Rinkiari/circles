@@ -1,0 +1,105 @@
+.global_container {
+  width: 896px;
+  margin: 40px auto;
+
+  .top_container {
+    max-width: 526px;
+    margin-bottom: 20px;
+
+    h2 {
+      font-size: 32px;
+      font-weight: 700;
+    }
+  }
+
+  .bottom_container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    .left_side {
+      width: 548px;
+
+      .card_img {
+        width: 100%;
+        height: 312px;
+        border: 4px solid black;
+        border-radius: 69px;
+        margin-bottom: 18px;
+      }
+
+      ul {
+        height: 63px;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+
+        .knopochka {
+          max-width: 233px;
+          height: 56px;
+          padding: 10px 16px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 6px;
+          font-size: 22px;
+          font-weight: 500;
+          border: 2px solid black;
+          border-radius: 69px;
+          background-color: white;
+          box-shadow: 3px 4px #cbcbcb;
+          cursor: pointer;
+          transition: all 0.3s ease;
+
+          &:hover {
+            background-color: rgb(234, 231, 231);
+          }
+
+          .icon {
+            width: 18px;
+            height: 18px;
+          }
+        }
+      }
+
+      .description_container {
+        h3 {
+          font-size: 24px;
+          font-weight: 700;
+          margin-bottom: 5px;
+        }
+      }
+    }
+
+    .right_side {
+      .msg_btn {
+        width: 294px;
+        height: 68px;
+        border: 4px solid black;
+        border-radius: 48px;
+        color: white;
+        background-color: #77a984;
+        font-size: 32px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .members_container {
+        width: 100%;
+        max-height: 566px;
+        border: 3px solid #cbcbcb;
+        border-radius: 50px;
+      }
+    }
+  }
+}
+
+.active {
+  .icon {
+    filter: brightness(0) invert(1) !important;
+  }
+
+  background-color: black !important;
+  color: white !important;
+}
