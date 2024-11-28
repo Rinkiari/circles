@@ -1,10 +1,27 @@
 .ctg_container {
+  position: relative;
   max-width: 1280px;
   height: 63px;
   margin-top: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  .popup {
+    position: absolute;
+    top: 86%;
+    left: 82%;
+    background-color: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(3px); // самый жёсткий и навороченный фильтер за всю мою жизнь я в шоке
+    border: 2px solid #ddd;
+    border-radius: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    margin: 10px 0px;
+  }
 }
 
 .knopochka {

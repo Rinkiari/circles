@@ -6,7 +6,17 @@ import Categories from '../components/Categories';
 import EventCard from '../components/EventCard';
 
 const Home = () => {
-  const categoriesArr = ['ТВОРЧЕСТВО', 'СПОРТ', 'ШОУ', 'ПРИРОДА', 'ИГРЫ', 'КИНО', ''];
+  const categoriesArr = [
+    'ТВОРЧЕСТВО',
+    'СПОРТ',
+    'ШОУ',
+    'ПРИРОДА',
+    'ИГРЫ',
+    'КИНО',
+    '',
+    'НАСТОЛЬНЫЕ ИГРЫ',
+    'ОБЩЕНИЕ',
+  ];
   const [selectedCategories, setSelectedCategories] = React.useState([]); //состояние категорий
   const [events, setEvents] = React.useState([]);
 
