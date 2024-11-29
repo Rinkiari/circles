@@ -1,5 +1,14 @@
 .event_card {
+  position: relative;
   cursor: pointer;
+
+  .crown_icon {
+    position: absolute;
+    top: 50%;
+    left: 72%;
+    width: 47px;
+    height: 35px;
+  }
 
   &.home {
     width: 420px;

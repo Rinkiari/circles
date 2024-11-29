@@ -1,6 +1,6 @@
 .global_container {
   max-width: 910px;
-  margin: 50px auto;
+  margin: 40px auto;
 
   .profile_container {
     width: 100%;
@@ -12,6 +12,14 @@
       margin-bottom: 40px;
       display: flex;
       align-items: center;
+
+      .hide_text {
+        margin-left: 200px;
+        font-size: 22px;
+        font-weight: 600px;
+        cursor: pointer;
+        color: #969696;
+      }
 
       h3 {
         display: inline-block;
@@ -158,4 +166,19 @@
       grid-row-gap: 18px;
     }
   }
+
+  .expanded_grid_container {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 8px;
+    grid-row-gap: 54px;
+  }
+}
+
+.see_hide {
+  font-size: 22px;
+  font-weight: 600px;
+  cursor: pointer;
+  color: #969696;
 }
