@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { LoginContext } from '../../App';
 import { useContext } from 'react';
 import styles from './Header.module.scss';
-import acc_icon from './account_icon.png';
+import acc_icon from '../../assets/account_icon.png';
 
 import Search from '../Search';
 
