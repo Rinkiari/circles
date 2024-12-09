@@ -19,7 +19,7 @@ const ProfileBlock = ({ value }) => {
   }
 
   const profile = value[0];
-  const { name, avatar, birth, city, about, events } = profile;
+  const { name, avatar, birth_and_city, about, events } = profile;
 
   return (
     <div className={styles.global_container}>
@@ -56,22 +56,15 @@ const ProfileBlock = ({ value }) => {
               <button className={`${styles.btn} ${styles[pageClass]}`}>
                 {location === '/profile' ? 'НАПИСАТЬ' : 'НОВЫЙ ПРОЕКТ'}
               </button>
-              <article className={styles.bio_block}>
-                <div className={styles.birth_container}>
-                  <h4>День рождения</h4>
-                  <p>{birth}</p>
-                </div>
 
-                <div>
-                  <h4>Город</h4>
-                  <p>{city}</p>
-                </div>
-
-                <div className={styles.about_container}>
-                  <h4>Обо мне</h4>
-                  <p>{about}</p>
-                </div>
-              </article>
+              <div className={styles.birth_container}>
+                <h4>День рождения и город</h4>
+                <p>{birth_and_city}</p>
+              </div>
+              <div className={styles.about_container}>
+                <h4>Обо мне</h4>
+                <p>{about}</p>
+              </div>
             </div>
           </div>
         )}
