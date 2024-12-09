@@ -10,6 +10,7 @@ const ProfileBlock = ({ value }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
 
   const location = useLocation().pathname;
+
   const pageClass = location === '/myprofile' ? 'myprofile' : location.slice(1);
   // console.log('logs in ProfileBlock:', value[0]);
 
@@ -18,7 +19,7 @@ const ProfileBlock = ({ value }) => {
   }
 
   const profile = value[0];
-  const { name, avatar, birth, about, events } = profile;
+  const { name, avatar, birth, city, about, events } = profile;
 
   return (
     <div className={styles.global_container}>
@@ -60,6 +61,12 @@ const ProfileBlock = ({ value }) => {
                   <h4>День рождения</h4>
                   <p>{birth}</p>
                 </div>
+
+                <div>
+                  <h4>Город</h4>
+                  <p>{city}</p>
+                </div>
+
                 <div className={styles.about_container}>
                   <h4>Обо мне</h4>
                   <p>{about}</p>
