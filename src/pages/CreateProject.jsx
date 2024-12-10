@@ -1,7 +1,14 @@
 import React from 'react';
+import Header from '../components/Header';
+import CreatePrBlock from '../components/CreatePrBlock';
 
 const CreateProject = () => {
-  return <div>CreateProject</div>;
+  return (
+    <>
+      <Header />
+      <CreatePrBlock />
+    </>
+  );
 };
 
 export default CreateProject;

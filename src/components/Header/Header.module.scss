@@ -15,13 +15,9 @@
   // default: background-image: linear-gradient(0.25turn, #93d9ff 0%, #ffde85 49%, #ff7f7f 100%);
 
   //(ДОПИСАТЬ)
+
   &.home {
-    background-image: linear-gradient(
-      0.25turn,
-      #93d9ff 0%,
-      #ffde85 49%,
-      #ff7f7f 100%
-    );
+    background-image: linear-gradient(0.25turn, #93d9ff 0%, #ffde85 49%, #ff7f7f 100%);
   }
 
   &.myprofile {
@@ -29,12 +25,11 @@
   }
 
   &.fillmyprofile {
-    background-image: linear-gradient(
-      0.25turn,
-      #93d9ff 0%,
-      #ffde85 49%,
-      #ff7f7f 100%
-    );
+    background-image: linear-gradient(0.25turn, #93d9ff 0%, #ffde85 49%, #ff7f7f 100%);
+  }
+
+  &.createproject {
+    background-image: linear-gradient(0.25turn, #93d9ff 0%, #ffde85 49%, #ff7f7f 100%);
   }
 
   &.profile {

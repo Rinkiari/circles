@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import EventCard from '../EventCard';
 
@@ -70,7 +71,9 @@ const ProfileBlock = ({ value }) => {
             )}
             {location === '/myprofile' && (
               <div className={`${styles.right_side_container} ${styles[pageClass]}`}>
-                <button className={styles.btn}>НОВЫЙ ПРОЕКТ</button>
+                <Link to="/createproject">
+                  <button className={styles.btn}>НОВЫЙ ПРОЕКТ</button>
+                </Link>
                 <div>
                   <h4>День рождения и город</h4>
                   <p>
