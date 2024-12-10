@@ -19,7 +19,7 @@ const ProfileBlock = ({ value }) => {
   }
 
   const profile = value[0];
-  const { name, avatar, birth_and_city, about, events } = profile;
+  const { name, avatar, birth, city, about, events } = profile;
 
   return (
     <div className={styles.global_container}>
@@ -52,20 +52,37 @@ const ProfileBlock = ({ value }) => {
             <div className={styles.left_side_container}>
               <img src={avatar} alt="ava" />
             </div>
-            <div className={styles.right_side_container}>
-              <button className={`${styles.btn} ${styles[pageClass]}`}>
-                {location === '/profile' ? 'НАПИСАТЬ' : 'НОВЫЙ ПРОЕКТ'}
-              </button>
-
-              <div className={styles.birth_container}>
-                <h4>День рождения и город</h4>
-                <p>{birth_and_city}</p>
+            {location === '/profile' && (
+              <div className={styles.right_side_container}>
+                <div className={styles.birth_container}>
+                  <h4>День рождения</h4>
+                  <p>{birth}</p>
+                </div>
+                <div className={styles.birth_container}>
+                  <h4>Город</h4>
+                  <p>{city}</p>
+                </div>
+                <div className={styles.about_container}>
+                  <h4>Обо мне</h4>
+                  <p>{about}</p>
+                </div>
               </div>
-              <div className={styles.about_container}>
-                <h4>Обо мне</h4>
-                <p>{about}</p>
+            )}
+            {location === '/myprofile' && (
+              <div className={`${styles.right_side_container} ${styles[pageClass]}`}>
+                <button className={styles.btn}>НОВЫЙ ПРОЕКТ</button>
+                <div>
+                  <h4>День рождения и город</h4>
+                  <p>
+                    {birth}, {city}
+                  </p>
+                </div>
+                <div className={styles.about_container}>
+                  <h4>Обо мне</h4>
+                  <p>{about}</p>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         )}
       </div>
