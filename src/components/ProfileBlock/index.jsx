@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import EventCard from '../EventCard';
 
@@ -9,6 +10,12 @@ import settings from '../../assets/settings_icon.png';
 
 const ProfileBlock = ({ value }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
+
+  const navigate = useNavigate();
+
+  const handleButtonClick = () => {
+    navigate('/fillmyprofile');
+  };
 
   const location = useLocation().pathname;
 
@@ -29,7 +36,9 @@ const ProfileBlock = ({ value }) => {
           <h3>{name}</h3>
           {isExpanded === false && (
             <>
-              <button className={`${styles.edit_button} ${styles[pageClass]}`}>
+              <button
+                className={`${styles.edit_button} ${styles[pageClass]}`}
+                onClick={handleButtonClick}>
                 Редактировать профиль
               </button>
               <img

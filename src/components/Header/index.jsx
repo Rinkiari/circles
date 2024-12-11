@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import { LoginContext } from '../../App';
+import { AuthContext } from '../../App';
 import { useContext } from 'react';
 import styles from './Header.module.scss';
 import acc_icon from '../../assets/account_icon.png';
@@ -16,7 +16,7 @@ const Header = () => {
       ? 'event'
       : location.pathname.slice(1);
 
-  const { isLogged, setIsLogged } = useContext(LoginContext);
+  const { isLogged, setIsLogged } = useContext(AuthContext);
 
   return (
     <div className={styles.root}>

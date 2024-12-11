@@ -4,12 +4,39 @@ import { useContext } from 'react';
 import styles from './LogOnBlock.module.scss';
 import backIcon from './back.png';
 
-import { LoginContext } from '../../App';
+import { AuthContext } from '../../App';
 
-const LogOnBlock = () => {
+const LogOnBlock = ({ handleSubmitReg, handleSubmitLog }) => {
   const [activeTab, setActiveTab] = useState('login');
 
-  const { isLogged, setIsLogged } = useContext(LoginContext);
+  const [login, setLogin] = useState(''); // cостояние для имени
+  const [email, setEmail] = useState(''); // cостояние для email
+  const [password, setPassword] = useState(''); // cостояние для пароля
+  const [passAgain, setPassAgain] = useState('');
+
+  const isPassesMatch = (event) => {
+    event.preventDefault();
+    let matched = false;
+
+    if (password === passAgain) {
+      matched = true;
+    } else {
+      matched = false;
+    }
+
+    if (matched) {
+      handleSubmitReg({ login, email, password });
+      console.log('Данные отправлены...');
+    } else {
+      alert('Пароли не совпадают!');
+    }
+  };
+
+  const handleAuth = (event) => {
+    event.preventDefault();
+
+    handleSubmitLog({ login, password });
+  };
 
   return (
     <div className={styles.background}>
@@ -17,7 +44,7 @@ const LogOnBlock = () => {
         <img src={backIcon} alt="back" className={styles.back_btn} />
       </Link>
       <div className={styles.authBox}>
-        {/* Вкладки */}
+        {/* вкладки */}
         <div className={styles.authTabs}>
           <span
             className={`${styles.tab} ${activeTab === 'login' ? styles.active : ''}`}
@@ -35,17 +62,26 @@ const LogOnBlock = () => {
         {/* Форма входа */}
         {activeTab === 'login' && (
           <div className={styles.formContainer}>
-            <form>
-              <input type="text" placeholder="Логин" className={styles.inputField} required />
-              <input type="password" placeholder="Пароль" className={styles.inputField} required />
-              <Link to="/myprofile">
-                <button
-                  onClick={() => setIsLogged(!isLogged)}
-                  type="submit"
-                  className={styles.submitBtn}>
-                  Продолжить
-                </button>
-              </Link>
+            <form onSubmit={handleAuth}>
+              <input
+                type="text"
+                placeholder="Логин"
+                className={styles.inputField}
+                value={login}
+                onChange={(e) => setLogin(e.target.value)}
+                required
+              />
+              <input
+                type="password"
+                placeholder="Пароль"
+                className={styles.inputField}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <button type="submit" className={styles.submitBtn}>
+                Продолжить
+              </button>
             </form>
           </div>
         )}
@@ -53,24 +89,42 @@ const LogOnBlock = () => {
         {/* Форма регистрации */}
         {activeTab === 'register' && (
           <div className={styles.formContainer}>
-            <form>
-              <input type="text" placeholder="Логин" className={styles.inputField} required />
-              <input type="password" placeholder="Пароль" className={styles.inputField} required />
+            <form onSubmit={isPassesMatch}>
+              <input
+                type="text"
+                placeholder="Логин"
+                className={styles.inputField}
+                value={login}
+                onChange={(e) => setLogin(e.target.value)}
+                required
+              />
+              <input
+                type="password"
+                placeholder="Пароль"
+                className={styles.inputField}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
               <input
                 type="password"
                 placeholder="Ещё раз пароль"
                 className={styles.inputField}
+                value={passAgain}
+                onChange={(e) => setPassAgain(e.target.value)}
                 required
               />
-              <input type="email" placeholder="Email" className={styles.inputField} required />
-              <Link to="/fillmyprofile">
-                <button
-                  onClick={() => setIsLogged(!isLogged)}
-                  type="submit"
-                  className={styles.submitBtn}>
-                  Продолжить
-                </button>
-              </Link>
+              <input
+                type="email"
+                placeholder="Email"
+                className={styles.inputField}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <button type="submit" className={styles.submitBtn}>
+                Продолжить
+              </button>
             </form>
           </div>
         )}
