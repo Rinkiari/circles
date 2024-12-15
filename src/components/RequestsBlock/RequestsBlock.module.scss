@@ -1,0 +1,35 @@
+.global_cont {
+  width: 902px;
+  margin: 30px auto;
+
+  .users_cont {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+
+    .user_wrapper {
+      width: 170px;
+      height: 208px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      gap: 7px;
+
+      .user_avatar {
+        width: 170px;
+        height: 170px;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+
+      .user_name {
+        font-size: 24px;
+        font-weight: bold;
+        color: black;
+      }
+    }
+  }
+}

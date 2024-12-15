@@ -46,20 +46,22 @@ const CreatePrBlock = () => {
   ];
 
   const [formValues, setFormValues] = React.useState({
-    title: '',
-    number_of_people: null,
+    name: '',
+    maxMembersCount: null,
     chat_link: '',
-    event_img: '',
-    place_and_time: '',
-    about: '',
-    tags: [],
+    city: 'спб', // REMOVE IT!!!
+    imageUrl: '',
+    timeAndPlaceInfo: '',
+    description: '',
+    typesNames: [],
+    organizerId: '7b976e64-0f0a-4bcb-83ea-11d8d5159b80', // ВШИЛ
   });
   console.log('Data:', formValues);
 
   // mассив для генерации placeholder'ов
   const infoArr = [
-    { label: 'Название', key: 'title' },
-    { label: 'Количество человек', key: 'number_of_people' },
+    { label: 'Название', key: 'name' },
+    { label: 'Количество человек', key: 'maxMembersCount' },
     { label: 'Ссылка на чат', key: 'chat_link' },
   ];
 
@@ -77,9 +79,9 @@ const CreatePrBlock = () => {
       reader.onload = (e) => {
         setFormValues((prev) => ({
           ...prev,
-          event_img: e.target.result, // cохраняем изображение как Data URL
+          imageUrl: e.target.result, // cохраняем изображение как Data URL
         }));
-        console.log('Event img: ', formValues.event_img);
+        console.log('Event img: ', formValues.imageUrl);
         console.log('E target result: ', e.target.result);
       };
       reader.readAsDataURL(file);
@@ -88,14 +90,14 @@ const CreatePrBlock = () => {
 
   const handleCategoryClick = (category) => {
     setFormValues((prevValues) => {
-      const updatedTags = new Set(prevValues.tags);
+      const updatedTags = new Set(prevValues.typesNames);
       updatedTags.has(category) ? updatedTags.delete(category) : updatedTags.add(category);
 
       setActiveCategories(updatedTags);
 
       return {
         ...prevValues,
-        tags: [...updatedTags], // преобразование Set обратно в массив
+        typesNames: [...updatedTags], // преобразование Set обратно в массив
       };
     });
   };
@@ -103,23 +105,23 @@ const CreatePrBlock = () => {
   const handleNextStep = async () => {
     let fieldsToCheck = [];
 
-    if (step === 1) {
-      fieldsToCheck = ['title', 'number_of_people', 'chat_link'];
-    } else if (step === 2) {
-      // fieldsToCheck = ['place_and_time', 'about'];
-    }
+    // if (step === 1) {
+    //   fieldsToCheck = ['name', 'maxMembersCount', 'chat_link'];
+    // } else if (step === 2) {
+    //   // fieldsToCheck = ['timeAndPlaceInfo', 'description'];
+    // }
 
-    const isFormValid = fieldsToCheck.every((field) => formValues[field].trim() !== '');
+    // const isFormValid = fieldsToCheck.every((field) => formValues[field].trim() !== '');
 
-    if (!isFormValid) {
-      alert('Пожалуйста, заполните все поля перед продолжением!');
-      return;
-    }
+    // if (!isFormValid) {
+    //   alert('Пожалуйста, заполните все поля перед продолжением!');
+    //   return;
+    // }
 
     if (step === 3) {
       try {
         // отправка данных на сервер
-        const response = await fetch('https://e895c70e3c56e1a7.mokky.dev/pjformtest', {
+        const response = await fetch('http://localhost:8080/api/events/new', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -176,9 +178,9 @@ const CreatePrBlock = () => {
                       onChange={handleFileChange}
                     />
                     <label htmlFor="fileInput">
-                      {formValues.event_img ? (
+                      {formValues.imageUrl ? (
                         <img
-                          src={formValues.event_img}
+                          src={formValues.imageUrl}
                           alt="Preview"
                           className={styles.uploaded_icon}
                         />
@@ -195,16 +197,16 @@ const CreatePrBlock = () => {
                     required
                     className={styles.inputek}
                     placeholder="Время и место"
-                    value={formValues.place_and_time || ''}
-                    onChange={(e) => handleInputChange('place_and_time', e.target.value)}
+                    value={formValues.timeAndPlaceInfo || ''}
+                    onChange={(e) => handleInputChange('timeAndPlaceInfo', e.target.value)}
                   />
                   <div className={styles.about_textarea}>
                     <h4>Черканите пару строк о своём уникальном сёркле!</h4>
                     <textarea
                       required
                       className={styles.textarea}
-                      value={formValues.about || ''}
-                      onChange={(e) => handleInputChange('about', e.target.value)}
+                      value={formValues.description || ''}
+                      onChange={(e) => handleInputChange('description', e.target.value)}
                     />
                   </div>
                 </>

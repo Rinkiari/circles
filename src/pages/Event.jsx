@@ -2,10 +2,12 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import EventBlock from '../components/EventBlock';
 import Header from '../components/Header';
+import RequestsBlock from '../components/RequestsBlock';
 
 const Event = () => {
   const { id } = useParams(); // получаем id из URL
   const [eventData, setEventData] = React.useState(null);
+  const [isVisibleReq, setIsVisibleReq] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(null);
 
@@ -19,6 +21,8 @@ const Event = () => {
       })
       .then((data) => {
         setEventData(data);
+        console.log(eventData);
+
         setLoading(false);
       })
       .catch((err) => {
@@ -35,16 +39,21 @@ const Event = () => {
     return <div>{error}</div>;
   }
 
+  const { reqUsers } = eventData;
+
   return (
     <>
       <Header />
-      <EventBlock
-        image={eventData.image}
-        title={eventData.title}
-        description={eventData.description}
-        fullness={eventData.fullness}
-        categories={eventData.categories}
-      />
+      {!isVisibleReq && (
+        <EventBlock
+          image={eventData.image}
+          title={eventData.title}
+          description={eventData.description}
+          fullness={eventData.fullness}
+          categories={eventData.categories}
+        />
+      )}
+      {isVisibleReq && <RequestsBlock reqUsers={reqUsers} />}
     </>
   );
 };

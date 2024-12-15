@@ -44,11 +44,13 @@ const FillMyProfileBlock = () => {
   const [formValues, setFormValues] = React.useState({
     name: '',
     surname: '',
-    gender: '',
-    date_of_birth: '',
     city: '',
-    about: '',
-    interests: [],
+    imageUrl: 'smth',
+    dateOfBirth: '2009-08-08',
+    role: 0,
+    gender: 0,
+    // interests: [],
+    bio: '',
   });
   console.log('Data:', formValues);
 
@@ -57,7 +59,7 @@ const FillMyProfileBlock = () => {
     { label: 'Имя', key: 'name' },
     { label: 'Фамилия', key: 'surname' },
     { label: 'Пол', key: 'gender' },
-    { label: 'День рождения', key: 'date_of_birth' },
+    { label: 'День рождения', key: 'dateOfBirth' },
     { label: 'Город', key: 'city' },
   ];
 
@@ -87,29 +89,35 @@ const FillMyProfileBlock = () => {
   const handleNextStep = async () => {
     let fieldsToCheck = [];
 
-    if (step === 1) {
-      fieldsToCheck = ['name', 'surname', 'gender', 'date_of_birth', 'city'];
-    } else if (step === 2) {
-      fieldsToCheck = ['about'];
-    }
+    // if (step === 1) {
+    //   fieldsToCheck = ['name', 'surname', 'gender', 'date_of_birth', 'city'];
+    // } else if (step === 2) {
+    //   fieldsToCheck = ['about'];
+    // }
 
-    const isFormValid = fieldsToCheck.every((field) => formValues[field].trim() !== '');
+    // const isFormValid = fieldsToCheck.every((field) => formValues[field].trim() !== '');
 
-    if (!isFormValid) {
-      alert('Пожалуйста, заполните все поля перед продолжением!');
-      return;
-    }
+    // if (!isFormValid) {
+    //   alert('Пожалуйста, заполните все поля перед продолжением!');
+    //   return;
+    // }
 
     if (step === 3) {
       try {
         // отправка данных на сервер
-        const response = await fetch('https://e895c70e3c56e1a7.mokky.dev/formtest', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
+        const TOKEN = localStorage.getItem('authToken');
+        console.log(TOKEN);
+        const response = await fetch(
+          'http://localhost:8080/api/users/update?userId=7b976e64-0f0a-4bcb-83ea-11d8d5159b80',
+          {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${TOKEN}`,
+            },
+            body: JSON.stringify(formValues),
           },
-          body: JSON.stringify(formValues),
-        });
+        );
 
         if (!response.ok) {
           throw new Error('Ошибка отправки данных.');
@@ -158,8 +166,8 @@ const FillMyProfileBlock = () => {
                     required
                     className={styles.textarea}
                     placeholder="Расскажите о себе"
-                    value={formValues.about || ''}
-                    onChange={(e) => handleInputChange('about', e.target.value)}
+                    value={formValues.bio || ''}
+                    onChange={(e) => handleInputChange('bio', e.target.value)}
                   />
                 </>
               )}

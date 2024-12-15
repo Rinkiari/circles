@@ -35,7 +35,7 @@ const LogOnBlock = ({ handleSubmitReg, handleSubmitLog }) => {
   const handleAuth = (event) => {
     event.preventDefault();
 
-    handleSubmitLog({ login, password });
+    handleSubmitLog({ email, password });
   };
 
   return (
@@ -67,8 +67,8 @@ const LogOnBlock = ({ handleSubmitReg, handleSubmitLog }) => {
                 type="text"
                 placeholder="Логин"
                 className={styles.inputField}
-                value={login}
-                onChange={(e) => setLogin(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
               <input
