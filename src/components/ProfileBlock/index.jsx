@@ -120,14 +120,14 @@ const ProfileBlock = ({ value }) => {
     return <p>Нет данных для отображения.</p>;
   }
 
-  const profile = value[0];
-  const { name, avatar, birth, city, about, events } = profile;
+  // const profile = value[0]; // Нужно для мокидева
+  const { name, surname, imageUrl, dateOfBirth, city, bio, events } = value;
 
   return (
     <div className={styles.global_container}>
       <div className={styles.profile_container}>
         <div className={styles.top_innerContainer}>
-          <h3>{name}</h3>
+          <h3>{`${name} ${surname}`}</h3>
           {isExpanded === false && (
             <>
               <button
@@ -154,10 +154,10 @@ const ProfileBlock = ({ value }) => {
         {isExpanded === false && (
           <div className={styles.bottom_innerContainer}>
             <div className={styles.left_side_container}>
-              {avatar === '' ? (
+              {imageUrl === '' ? (
                 <img className={styles.avatar_default} src={default_user_avatar} alt="ava" />
               ) : (
-                <img className={styles.avatar_frombknd} src={avatar} alt="ava" />
+                <img className={styles.avatar_frombknd} src={imageUrl} alt="ava" />
               )}
               {location === '/myprofile' ? (
                 <div onClick={handleOverlayClick} className={styles.overlay}>
@@ -178,7 +178,7 @@ const ProfileBlock = ({ value }) => {
               <div className={styles.right_side_container}>
                 <div className={styles.birth_container}>
                   <h4>День рождения</h4>
-                  <p>{birth}</p>
+                  <p>{dateOfBirth}</p>
                 </div>
                 <div className={styles.birth_container}>
                   <h4>Город</h4>
@@ -186,7 +186,7 @@ const ProfileBlock = ({ value }) => {
                 </div>
                 <div className={styles.about_container}>
                   <h4>Обо мне</h4>
-                  <p>{about}</p>
+                  <p>{bio}</p>
                 </div>
               </div>
             )}
@@ -198,12 +198,12 @@ const ProfileBlock = ({ value }) => {
                 <div>
                   <h4>День рождения и город</h4>
                   <p>
-                    {birth}, {city}
+                    {dateOfBirth}, {city}
                   </p>
                 </div>
                 <div className={styles.about_container}>
                   <h4>Обо мне</h4>
-                  <p>{about}</p>
+                  <p>{bio}</p>
                 </div>
               </div>
             )}
