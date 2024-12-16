@@ -7,8 +7,102 @@ import EventCard from '../EventCard';
 
 import styles from './ProfileBlock.module.scss';
 import settings from '../../assets/settings_icon.png';
+import default_user_avatar from '../../assets/user.png';
 
 const ProfileBlock = ({ value }) => {
+  const fileInputRef = React.useRef(null);
+
+  const handleOverlayClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0]; // Получаем выбранный файл
+
+    if (!file) {
+      alert('Файл не выбран.');
+      return;
+    }
+
+    if (!file.type.startsWith('image/')) {
+      alert('Пожалуйста, выберите изображение.');
+      return;
+    }
+
+    // Формируем данные для отправки
+    const formData = new FormData();
+    formData.append('image', file); // Ключ 'image' должен совпадать с тем, что ожидает сервер
+
+    try {
+      const response = await fetch('https://your-backend.com/upload', {
+        method: 'POST',
+        body: formData, // Передаём FormData
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        alert('Изображение успешно загружено!');
+        console.log('Ответ сервера:', data);
+      } else {
+        alert('Ошибка при загрузке изображения.');
+        console.error('Ошибка загрузки. Код ответа:', response.status);
+      }
+    } catch (error) {
+      console.error('Сетевая ошибка при загрузке:', error);
+      alert('Ошибка сети при отправке изображения.');
+    }
+  };
+
+  const handleFileChange64 = async (event) => {
+    const file = event.target.files[0]; // Получаем выбранный файл
+
+    if (!file) {
+      alert('Файл не выбран.');
+      return;
+    }
+
+    if (!file.type.startsWith('image/')) {
+      alert('Пожалуйста, выберите изображение.');
+      return;
+    }
+
+    // Преобразуем файл в Base64
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const base64Image = reader.result; // Здесь содержится Base64 строка
+
+      try {
+        // Отправляем Base64 строку на сервер
+        const response = await fetch('https://your-backend.com/upload', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json', // Указываем JSON формат
+          },
+          body: JSON.stringify({ image: base64Image }), // Передаём изображение в JSON
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          alert('Изображение успешно загружено!');
+          console.log('Ответ сервера:', data);
+        } else {
+          alert('Ошибка при загрузке изображения.');
+          console.error('Ошибка загрузки. Код ответа:', response.status);
+        }
+      } catch (error) {
+        console.error('Сетевая ошибка при загрузке:', error);
+        alert('Ошибка сети при отправке изображения.');
+      }
+    };
+
+    reader.onerror = () => {
+      alert('Ошибка при чтении файла.');
+      console.error('Ошибка при преобразовании файла в Base64.');
+    };
+
+    reader.readAsDataURL(file); // Читаем файл как Data URL (Base64)
+  };
+
   const [isExpanded, setIsExpanded] = React.useState(false);
 
   const navigate = useNavigate();
@@ -60,7 +154,25 @@ const ProfileBlock = ({ value }) => {
         {isExpanded === false && (
           <div className={styles.bottom_innerContainer}>
             <div className={styles.left_side_container}>
-              <img src={avatar} alt="ava" />
+              {avatar === '' ? (
+                <img className={styles.avatar_default} src={default_user_avatar} alt="ava" />
+              ) : (
+                <img className={styles.avatar_frombknd} src={avatar} alt="ava" />
+              )}
+              {location === '/myprofile' ? (
+                <div onClick={handleOverlayClick} className={styles.overlay}>
+                  <div className={styles.overlay_text}>изменить фото</div>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    style={{ display: 'none' }}
+                    ref={fileInputRef}
+                    onChange={handleFileChange}
+                  />
+                </div>
+              ) : (
+                ''
+              )}
             </div>
             {location === '/profile' && (
               <div className={styles.right_side_container}>

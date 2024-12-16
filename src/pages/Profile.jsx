@@ -6,15 +6,18 @@ import ProfileBlock from '../components/ProfileBlock';
 const Profile = () => {
   const [profileInfo, setProfileInfo] = React.useState([]);
 
+  // https://e895c70e3c56e1a7.mokky.dev/user
+  // http://localhost:8080/api/users/get?userId=7b976e64-0f0a-4bcb-83ea-11d8d5159b80
+
   React.useEffect(() => {
     const TOKEN = localStorage.getItem('authToken'); // Замените на ваш токен
     console.log(TOKEN);
 
-    fetch('http://localhost:8080/api/users/get?userId=7b976e64-0f0a-4bcb-83ea-11d8d5159b80', {
+    fetch('https://e895c70e3c56e1a7.mokky.dev/user', {
       method: 'GET',
-      headers: {
-        Authorization: `Bearer ${TOKEN}`, // Убедитесь, что заголовок Content-Type установлен, если это необходимо
-      },
+      // headers: {
+      //   Authorization: `Bearer ${TOKEN}`, // Убедитесь, что заголовок Content-Type установлен, если это необходимо
+      // },
     })
       .then((res) => res.json())
       .then((jsonRes) => {

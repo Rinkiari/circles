@@ -4,6 +4,7 @@
 
   .profile_container {
     width: 100%;
+    min-height: 410px;
     max-height: 432px;
 
     .top_innerContainer {
@@ -62,16 +63,68 @@
     }
 
     .bottom_innerContainer {
+      width: 100%;
+      height: 100%;
       display: flex;
       justify-content: space-between;
       margin-right: 12px;
 
       .left_side_container {
-        img {
-          width: 547px;
-          height: 312px;
-          border: 4px solid black;
-          border-radius: 69px;
+        position: relative;
+        width: 550px;
+        height: 324px;
+        border: 4px solid black;
+        border-radius: 69px;
+        display: flex;
+        align-items: center;
+
+        .overlay {
+          cursor: pointer;
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          border-radius: 64px;
+          background-color: rgba(0, 0, 0, 0.6);
+          opacity: 0;
+          transition: all 0.25s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          &:hover {
+            opacity: 1;
+          }
+
+          .overlay_text {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            line-height: 320px;
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+            opacity: 0;
+            text-transform: uppercase;
+
+            &:hover {
+              opacity: 1;
+            }
+          }
+        }
+
+        .avatar_frombknd {
+          width: 100%;
+          height: 100%;
+          border-radius: 63px;
+          margin-right: auto;
+        }
+
+        .avatar_default {
+          width: 310px;
+          height: 310px;
+          margin: 0px auto;
         }
       }
 
