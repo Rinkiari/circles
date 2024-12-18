@@ -1,4 +1,5 @@
 import React from 'react';
+import { useAuth } from '../context/AuthContext';
 import '../scss/app.scss';
 
 import Header from '../components/Header';
@@ -6,6 +7,8 @@ import Categories from '../components/Categories';
 import EventCard from '../components/EventCard';
 
 const Home = () => {
+  const { authData } = useAuth();
+
   const categoriesArr = [
     'ТВОРЧЕСТВО',
     'СПОРТ',

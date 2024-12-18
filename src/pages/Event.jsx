@@ -1,4 +1,5 @@
 import React from 'react';
+import { useAuth } from '../context/AuthContext';
 import { useParams } from 'react-router-dom';
 import EventBlock from '../components/EventBlock';
 import Header from '../components/Header';
@@ -6,6 +7,7 @@ import RequestsBlock from '../components/RequestsBlock';
 
 const Event = () => {
   const { id } = useParams(); // получаем id из URL
+  const { authData } = useAuth();
   const [eventData, setEventData] = React.useState(null);
   const [isVisibleReq, setIsVisibleReq] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
@@ -14,11 +16,9 @@ const Event = () => {
   // http://localhost:8080/api/events/getById?eventId=766ebc09-39cb-4f2e-955a-65febef227a8
   // https://e895c70e3c56e1a7.mokky.dev/events/${id}
 
-  const TOKEN = localStorage.getItem('authToken');
-
   React.useEffect(() => {
     fetch(`http://localhost:8080/api/events/getById?eventId=${id}`, {
-      Authorization: `Bearer ${TOKEN}`,
+      Authorization: `Bearer ${authData.access_token}`,
     })
       .then((res) => {
         if (!res.ok) {

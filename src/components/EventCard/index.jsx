@@ -1,4 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+
 import styles from './EventCard.module.scss';
 import crown from '../../assets/crown_icon_big.png';
 import def_event_image from '../../assets/default_event.png';
@@ -7,7 +9,8 @@ const EventCard = ({ eventId, organizerId, name, imageUrl, membersCount, maxMemb
   const location = useLocation();
   const navigate = useNavigate();
 
-  const currentUserId = '3d8d2f10-ab48-494e-ad25-c015873deea0'; // ВШИТО
+  const { authData } = useAuth();
+  const currentUserId = authData.user_id;
   const isAdmin = currentUserId === organizerId ? true : false;
 
   const pageClass = location.pathname === '/' ? 'home' : location.pathname.slice(1);

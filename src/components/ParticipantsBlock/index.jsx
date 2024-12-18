@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React from 'react';
+import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import styles from './ParticipantsBlock.module.scss';
 
@@ -12,7 +13,9 @@ const ParticipantsBlock = ({ event_ownerID, members, maxMembersCount, membersCou
   console.log('mc', membersCount);
 
   const navigate = useNavigate();
-  const myID = '3d8d2f10-ab48-494e-ad25-c015873deea0'; //ВШИТО
+
+  const { authData } = useAuth();
+  const myID = authData.user_id;
 
   const handleProfileClick = (id) => {
     event_ownerID === myID ? navigate('/myprofile/') : navigate(`/profile/${id}`);

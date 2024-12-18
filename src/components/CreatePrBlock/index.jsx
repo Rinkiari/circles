@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 import styles from './CreatePrBlock.module.scss';
 
@@ -16,6 +17,7 @@ import board_games from '../FillMyProfBlock/assets/nastol_igri.png';
 import communication from '../FillMyProfBlock/assets/obshenie.png';
 
 const CreatePrBlock = () => {
+  const { authData } = useAuth();
   const navigate = useNavigate();
   const [step, setStep] = React.useState(1);
 
@@ -53,7 +55,7 @@ const CreatePrBlock = () => {
     timeAndPlaceInfo: '',
     description: '',
     typesNames: [],
-    organizerId: '3d8d2f10-ab48-494e-ad25-c015873deea0', // ВШИЛ
+    organizerId: authData.user_id,
   });
   console.log('Data:', formValues);
 
@@ -103,7 +105,6 @@ const CreatePrBlock = () => {
 
   const handleNextStep = async () => {
     let fieldsToCheck = [];
-    const TOKEN = localStorage.getItem('authToken');
 
     // if (step === 1) {
     //   fieldsToCheck = ['name', 'maxMembersCount', 'chat_link'];
@@ -124,7 +125,7 @@ const CreatePrBlock = () => {
         const response = await fetch('http://localhost:8080/api/events/new', {
           method: 'POST',
           headers: {
-            Authorization: `Bearer ${TOKEN}`,
+            Authorization: `Bearer ${authData.access_token}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(formValues),

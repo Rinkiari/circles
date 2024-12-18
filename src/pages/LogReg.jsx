@@ -1,12 +1,13 @@
 import { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
 
 import LogOnBlock from '../components/LogOnBlock';
 import { useNavigate } from 'react-router-dom';
 
 const LogReg = () => {
   const navigate = useNavigate();
-  const [message, setMessage] = useState(''); // message об ошибке или успехе
   const [success, setSuccess] = useState(false);
+  const { saveAuthData, authData } = useAuth();
 
   const role = 0;
 
@@ -23,20 +24,18 @@ const LogReg = () => {
 
       if (response.ok) {
         const dataFromReg = await response.json();
-        localStorage.setItem('authToken', dataFromReg.access_token);
-        setMessage('Регистрация успешна!');
+        saveAuthData(dataFromReg);
+        console.log('Data from registration in state authData: ', authData);
         alert('Регистрация успешна!');
-        console.log(message);
-        console.log('Ur data: ', dataFromReg);
         setSuccess(true);
+        navigate('/fillmyprofile');
       } else if (response.status === 400) {
-        setMessage('Ошибка регистрации. Проверьте введённые данные.');
+        alert('Ошибка регистрации. Проверьте введённые данные.');
       } else {
-        setMessage('Ошибка регистрации.');
+        alert('Ошибка регистрации.');
       }
     } catch (error) {
-      setMessage('Сетевая ошибка.');
-      console.error('Ошибка:', error);
+      console.error('Ошибка: ', error);
     }
   };
 
@@ -54,25 +53,21 @@ const LogReg = () => {
 
       if (response.ok) {
         const dataFromLog = await response.json();
-        localStorage.setItem('authToken', dataFromLog.access_token); // save токен
-        setMessage('Успешный вход!'); // cообщаем об успехе
+        saveAuthData(dataFromLog);
+        console.log('Data from login in state authData: ', authData);
         alert('Успешный вход в аккаунт!');
         setSuccess(true);
-        navigate('/fillmyprofile');
-        console.log('User data:', dataFromLog.data); // for отладкa
+        navigate('/myprofile');
       } else if (response.status === 404) {
-        setMessage('Пользователь не найден.');
+        alert('Пользователь не найден.');
       } else if (response.status === 403) {
-        setMessage('Доступ запрещён.');
+        alert('Доступ запрещён.');
       } else {
-        setMessage('Ошибка авторизации.');
+        alert('Ошибка авторизации.');
       }
     } catch (error) {
-      setMessage('Сетевая ошибка.');
       console.error('Ошибка:', error);
     }
-
-    alert(message);
   };
 
   return <LogOnBlock handleSubmitReg={handleSubmitReg} handleSubmitLog={handleSubmitLog} />;

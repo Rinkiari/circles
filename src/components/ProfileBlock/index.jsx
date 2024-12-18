@@ -127,7 +127,6 @@ const ProfileBlock = ({ value }) => {
     return <p>Нет данных для отображения.</p>;
   }
 
-  // const profile = value[0]; // Нужно для мокидева
   const { name, surname, imageUrl, dateOfBirth, city, bio, events } = value;
 
   return (

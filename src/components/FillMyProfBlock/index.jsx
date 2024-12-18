@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import styles from './FillMyProfBlock.module.scss';
 import art from './assets/tvorchestvo.png';
 import sport from './assets/sport.png';
@@ -13,6 +15,7 @@ import communication from './assets/obshenie.png';
 import ProgressLine from '../ProgressLine';
 
 const FillMyProfileBlock = () => {
+  const { authData } = useAuth();
   const categoriesArr = [
     'ТВОРЧЕСТВО',
     'СПОРТ',
@@ -52,7 +55,6 @@ const FillMyProfileBlock = () => {
     interestsNames: [],
     bio: '',
   });
-  console.log('Data:', formValues);
 
   // mассив для генерации placeholder'ов
   const infoArr = [
@@ -105,15 +107,13 @@ const FillMyProfileBlock = () => {
     if (step === 3) {
       try {
         // отправка данных на сервер
-        const TOKEN = localStorage.getItem('authToken');
-        console.log(TOKEN);
         const response = await fetch(
-          'http://localhost:8080/api/users/update?userId=3d8d2f10-ab48-494e-ad25-c015873deea0',
+          `http://localhost:8080/api/users/update?userId=${authData.user_id}`,
           {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
-              Authorization: `Bearer ${TOKEN}`,
+              Authorization: `Bearer ${authData.access_token}`,
             },
             body: JSON.stringify(formValues),
           },

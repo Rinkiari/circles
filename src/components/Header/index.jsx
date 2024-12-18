@@ -1,13 +1,16 @@
+import { useAuth } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import { AuthContext } from '../../App';
-import { useContext } from 'react';
+
 import styles from './Header.module.scss';
 import acc_icon from '../../assets/account_icon.png';
+import logout_icon from '../../assets/logout.png';
 
 import Search from '../Search';
 
 const Header = () => {
+  const { authData, logout } = useAuth();
+
   const location = useLocation();
   const pageClass =
     location.pathname === '/'
@@ -20,8 +23,6 @@ const Header = () => {
 
   console.log(pageClass);
 
-  const { isLogged, setIsLogged } = useContext(AuthContext);
-
   return (
     <div className={styles.root}>
       <div className={`${styles.panel_container} ${styles[pageClass]}`}>
@@ -33,18 +34,16 @@ const Header = () => {
 
         <div className={styles.right_side}>
           <Search />
-          {isLogged === false ? (
+          {authData.access_token ? (
+            <>
+              <Link to="/myprofile">
+                <img src={acc_icon} className={styles.account_icon} alt="icon" />
+              </Link>
+              <img src={logout_icon} alt="logout" className={styles.logout_icon} onClick={logout} />
+            </>
+          ) : (
             <Link to="/login">
               <p className={styles.loginlink}>ВОЙТИ</p>
-            </Link>
-          ) : (
-            <Link to="/myprofile">
-              <img
-                onClick={() => setIsLogged(!isLogged)}
-                src={acc_icon}
-                className={styles.account_icon}
-                alt="icon"
-              />
             </Link>
           )}
         </div>

@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useContext } from 'react';
+import { useAuth } from '../../context/AuthContext';
 import styles from './LogOnBlock.module.scss';
 import backIcon from './back.png';
-
-import { AuthContext } from '../../App';
 
 const LogOnBlock = ({ handleSubmitReg, handleSubmitLog }) => {
   const [activeTab, setActiveTab] = useState('login');
@@ -59,7 +57,7 @@ const LogOnBlock = ({ handleSubmitReg, handleSubmitLog }) => {
         </div>
         <hr className={styles.divider} />
 
-        {/* Форма входа */}
+        {/* форма входа */}
         {activeTab === 'login' && (
           <div className={styles.formContainer}>
             <form onSubmit={handleAuth}>

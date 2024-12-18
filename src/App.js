@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
 import './scss/app.scss';
 
 import Home from './pages/Home';
@@ -10,15 +11,10 @@ import Event from './pages/Event';
 import FillMyProfile from './pages/FillMyProfile';
 import CreateProject from './pages/CreateProject';
 
-export const AuthContext = React.createContext();
-export const useAuth = () => React.useContext(AuthContext);
-
 function App() {
-  const [isLogged, setIsLogged] = React.useState(false);
-
   return (
     <div className="app-container">
-      <AuthContext.Provider value={{ isLogged, setIsLogged }}>
+      <AuthProvider>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LogReg />} />
@@ -28,7 +24,7 @@ function App() {
           <Route path="/createproject" element={<CreateProject />} />
           <Route path="/event/:id" element={<Event />} />
         </Routes>
-      </AuthContext.Provider>
+      </AuthProvider>
     </div>
   );
 }
