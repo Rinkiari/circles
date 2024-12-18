@@ -23,7 +23,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LogReg />} />
           <Route path="/myprofile" element={<MyProfile />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/:id" element={<Profile />} />
           <Route path="/fillmyprofile" element={<FillMyProfile />} />
           <Route path="/createproject" element={<CreateProject />} />
           <Route path="/event/:id" element={<Event />} />

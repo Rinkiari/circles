@@ -6,6 +6,7 @@ import { svg_iconsArr } from '../Categories';
 import def_event_image from '../../assets/default_event.png';
 
 const EventBlock = ({
+  event_ownerID,
   imageUrl,
   name,
   description,
@@ -53,6 +54,7 @@ const EventBlock = ({
         <div className={styles.right_side}>
           <button className={styles.msg_btn}>НАПИСАТЬ</button>
           <ParticipantsBlock
+            event_ownerID={event_ownerID}
             members={members}
             maxMembersCount={maxMembersCount}
             membersCount={membersCount}

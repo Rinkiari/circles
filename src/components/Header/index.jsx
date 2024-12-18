@@ -14,7 +14,11 @@ const Header = () => {
       ? 'home'
       : location.pathname.startsWith('/event')
       ? 'event'
+      : location.pathname.startsWith('/profile')
+      ? 'profile'
       : location.pathname.slice(1);
+
+  console.log(pageClass);
 
   const { isLogged, setIsLogged } = useContext(AuthContext);
 

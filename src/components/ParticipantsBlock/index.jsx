@@ -1,15 +1,22 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './ParticipantsBlock.module.scss';
 
 import crown from '../../assets/crown_icon.png';
-import { Link } from 'react-router-dom';
 
-const ParticipantsBlock = ({ members, maxMembersCount, membersCount }) => {
+const ParticipantsBlock = ({ event_ownerID, members, maxMembersCount, membersCount }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
 
   console.log('maxmc', maxMembersCount);
   console.log('mc', membersCount);
+
+  const navigate = useNavigate();
+  const myID = '3d8d2f10-ab48-494e-ad25-c015873deea0'; //ВШИТО
+
+  const handleProfileClick = (id) => {
+    event_ownerID === myID ? navigate('/myprofile/') : navigate(`/profile/${id}`);
+  };
 
   // чек кол-ва участников
   if (!membersCount || membersCount === 0) {
@@ -33,7 +40,7 @@ const ParticipantsBlock = ({ members, maxMembersCount, membersCount }) => {
       <div className={`${styles.listContainer} ${isExpanded ? styles.expanded : ''}`}>
         <ul className={styles.list}>
           {visibleMembers.map((user, index) => (
-            <li key={index} className={styles.participant}>
+            <li key={index} className={styles.participant} onClick={handleProfileClick(user.id)}>
               {/* CHANGE TO IMAGE FROM ARRAY */}
               {/* ADD CHECK IF !IMG ? */}
               <img
@@ -42,9 +49,7 @@ const ParticipantsBlock = ({ members, maxMembersCount, membersCount }) => {
                 className={styles.avatar}
               />
               {/* INSERT USER_ID */}
-              <Link to="/profile">
-                <span className={styles.nick}>{user.name}</span>
-              </Link>
+              <span className={styles.nick}>{user.name}</span>
               {/* ADMIN SHOULD BE FIRST EL IN ARRAY */}
               {index === 0 && (
                 <span className={styles.admin}>

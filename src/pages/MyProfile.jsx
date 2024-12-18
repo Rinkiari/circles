@@ -7,9 +7,10 @@ const MyProfile = () => {
   const [myProfileInfo, setMyProfileInfo] = React.useState([]);
   console.log(`myProfileInfo logs: ${myProfileInfo}`);
   const TOKEN = localStorage.getItem('authToken');
+  const myID = '3d8d2f10-ab48-494e-ad25-c015873deea0'; // ВШИТО
 
   React.useEffect(() => {
-    fetch('http://localhost:8080/api/users/get?userId=3d8d2f10-ab48-494e-ad25-c015873deea0', {
+    fetch(`http://localhost:8080/api/users/get?userId=${myID}`, {
       headers: {
         Authorization: `Bearer ${TOKEN}`, // Убедитесь, что заголовок Content-Type установлен, если это необходимо
       },

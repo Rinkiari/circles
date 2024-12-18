@@ -53,7 +53,7 @@
         width: 41px;
         height: 41px;
         cursor: pointer;
-        margin-left: 258px;
+        margin-left: auto;
 
         &.profile {
           display: none;
@@ -131,14 +131,15 @@
         width: 304px;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
 
         &.profile {
           align-items: flex-start;
+          justify-content: space-around;
         }
 
         &.myprofile {
           align-items: center;
+          justify-content: space-between;
         }
 
         h4 {

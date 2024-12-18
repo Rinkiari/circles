@@ -113,8 +113,15 @@ const ProfileBlock = ({ value }) => {
 
   const location = useLocation().pathname;
 
-  const pageClass = location === '/myprofile' ? 'myprofile' : location.slice(1);
-  // console.log('logs in ProfileBlock:', value[0]);
+  const pageClass =
+    location === '/myprofile'
+      ? 'myprofile'
+      : location.startsWith('/profile')
+      ? 'profile'
+      : location.slice(1);
+
+  console.log('location: ', location);
+  console.log('pageClass: ', pageClass);
 
   if (!value || value.length === 0) {
     return <p>Нет данных для отображения.</p>;
@@ -174,8 +181,8 @@ const ProfileBlock = ({ value }) => {
                 ''
               )}
             </div>
-            {location === '/profile' && (
-              <div className={styles.right_side_container}>
+            {location.startsWith('/profile') && (
+              <div className={`${styles.right_side_container} ${styles[pageClass]}`}>
                 <div className={styles.birth_container}>
                   <h4>День рождения</h4>
                   <p>{dateOfBirth}</p>
