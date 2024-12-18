@@ -58,7 +58,7 @@ const LogReg = () => {
         setMessage('Успешный вход!'); // cообщаем об успехе
         alert('Успешный вход в аккаунт!');
         setSuccess(true);
-        navigate('/myprofile');
+        navigate('/fillmyprofile');
         console.log('User data:', dataFromLog.data); // for отладкa
       } else if (response.status === 404) {
         setMessage('Пользователь не найден.');

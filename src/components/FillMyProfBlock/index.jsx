@@ -45,11 +45,11 @@ const FillMyProfileBlock = () => {
     name: '',
     surname: '',
     city: '',
-    imageUrl: 'smth',
-    dateOfBirth: '2009-08-08',
+    imageUrl: '',
+    dateOfBirth: '',
     role: 0,
     gender: 0,
-    // interests: [],
+    interestsNames: [],
     bio: '',
   });
   console.log('Data:', formValues);
@@ -72,7 +72,7 @@ const FillMyProfileBlock = () => {
 
   const handleCategoryClick = (category) => {
     setFormValues((prevValues) => {
-      const updatedInterests = new Set(prevValues.interests);
+      const updatedInterests = new Set(prevValues.interestsNames);
       updatedInterests.has(category)
         ? updatedInterests.delete(category)
         : updatedInterests.add(category);
@@ -81,7 +81,7 @@ const FillMyProfileBlock = () => {
 
       return {
         ...prevValues,
-        interests: [...updatedInterests], // преобразование Set обратно в массив
+        interestsNames: [...updatedInterests], // преобразование Set обратно в массив
       };
     });
   };
@@ -108,7 +108,7 @@ const FillMyProfileBlock = () => {
         const TOKEN = localStorage.getItem('authToken');
         console.log(TOKEN);
         const response = await fetch(
-          'http://localhost:8080/api/users/update?userId=7b976e64-0f0a-4bcb-83ea-11d8d5159b80',
+          'http://localhost:8080/api/users/update?userId=3d8d2f10-ab48-494e-ad25-c015873deea0',
           {
             method: 'PUT',
             headers: {

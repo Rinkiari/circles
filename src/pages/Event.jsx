@@ -11,11 +11,18 @@ const Event = () => {
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(null);
 
+  // http://localhost:8080/api/events/getById?eventId=766ebc09-39cb-4f2e-955a-65febef227a8
+  // https://e895c70e3c56e1a7.mokky.dev/events/${id}
+
+  const TOKEN = localStorage.getItem('authToken');
+
   React.useEffect(() => {
-    fetch(`https://e895c70e3c56e1a7.mokky.dev/events/${id}`)
+    fetch(`http://localhost:8080/api/events/getById?eventId=${id}`, {
+      Authorization: `Bearer ${TOKEN}`,
+    })
       .then((res) => {
         if (!res.ok) {
-          throw new Error(`Ошибка загрузки мероприятия с id ${id}`);
+          throw new Error(`Ошибка загрузки мероприятия`);
         }
         return res.json();
       })
@@ -29,7 +36,7 @@ const Event = () => {
         setError(err.message);
         setLoading(false);
       });
-  }, [id]);
+  }, []);
 
   if (loading) {
     return <div>Загрузка...</div>;
@@ -46,11 +53,15 @@ const Event = () => {
       <Header />
       {!isVisibleReq && (
         <EventBlock
-          image={eventData.image}
-          title={eventData.title}
+          timeAndPlaceInfo={eventData.timeAndPlaceInfo}
+          imageUrl={eventData.imageUrl}
+          name={eventData.name}
           description={eventData.description}
           fullness={eventData.fullness}
-          categories={eventData.categories}
+          types={eventData.types}
+          members={eventData.members}
+          maxMembersCount={eventData.maxMembersCount}
+          membersCount={eventData.membersCount}
         />
       )}
       {isVisibleReq && <RequestsBlock reqUsers={reqUsers} />}

@@ -218,17 +218,14 @@ const ProfileBlock = ({ value }) => {
             <p onClick={() => setIsExpanded(!isExpanded)}>См. все</p>
           </div>
           <div className={styles.bottom_innerPrContainer}>
-            {events.slice(0, 3).map((obj) => (
-              <EventCard key={obj.id} {...obj} />
-            ))}
+            {events === !null &&
+              events.slice(0, 3).map((obj) => <EventCard key={obj.id} {...obj} />)}
           </div>
         </div>
       )}
       {isExpanded === true && (
         <div className={styles.expanded_grid_container}>
-          {events.map((obj) => (
-            <EventCard key={obj.id} {...obj} />
-          ))}
+          {events === !null && events.map((obj) => <EventCard key={obj.id} {...obj} />)}
         </div>
       )}
     </div>

@@ -17,6 +17,7 @@ const Home = () => {
     'НАСТОЛЬНЫЕ ИГРЫ',
     'ОБЩЕНИЕ',
   ];
+
   const [selectedCategories, setSelectedCategories] = React.useState([]); //состояние категорий
   const [events, setEvents] = React.useState([]);
 
@@ -28,20 +29,30 @@ const Home = () => {
           : [...prev, categoryIndex], // добавляем категорию, если она не выбрана
     );
   };
+  console.log(selectedCategories);
 
   const selectedCategoryNames = selectedCategories.map((index) => categoriesArr[index]);
+  console.log('names', selectedCategoryNames);
+
+  // https://e895c70e3c56e1a7.mokky.dev/events?categories=
+  // https://e895c70e3c56e1a7.mokky.dev/events
+
+  // http://localhost:8080/api/events/all
 
   React.useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const url =
-          selectedCategoryNames.length > 0
-            ? `https://e895c70e3c56e1a7.mokky.dev/events?categories=*${encodeURIComponent(
-                selectedCategoryNames.join(','),
-              )}`
-            : `https://e895c70e3c56e1a7.mokky.dev/events`;
-
-        const response = await fetch(url);
+        const response =
+          selectedCategories.length === 0
+            ? await fetch('http://localhost:8080/api/events/all', {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+              })
+            : await fetch('http://localhost:8080/api/events/all', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: selectedCategoryNames,
+              });
         const data = await response.json();
         setEvents(data);
       } catch (error) {
@@ -53,15 +64,6 @@ const Home = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCategories]);
 
-  // OLD FETCH
-  // React.useEffect(() => {
-  //   fetch('https://e895c70e3c56e1a7.mokky.dev/events')
-  //     .then((res) => res.json())
-  //     .then((jsonRes) => {
-  //       setEvent(jsonRes);
-  //     });
-  // }, []);
-
   return (
     <>
       <Header />
@@ -72,7 +74,15 @@ const Home = () => {
       />
       <div className="event_container">
         {events.map((obj) => (
-          <EventCard key={obj.id} {...obj} />
+          <EventCard
+            key={obj.id}
+            eventId={obj.id}
+            name={obj.name}
+            imageUrl={obj.imageUrl}
+            membersCount={obj.membersCount}
+            maxMembersCount={obj.maxMembersCount}
+            organizerId={obj.organizer.id}
+          />
         ))}
       </div>
     </>

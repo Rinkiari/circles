@@ -5,18 +5,23 @@ import styles from './ParticipantsBlock.module.scss';
 import crown from '../../assets/crown_icon.png';
 import { Link } from 'react-router-dom';
 
-const ParticipantsBlock = ({ fullness }) => {
+const ParticipantsBlock = ({ members, maxMembersCount, membersCount }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
 
-  // чек данных
-  if (!fullness || !Array.isArray(fullness) || fullness.length === 0) {
-    return <div className={styles.error}>Данные о участниках отсутствуют</div>;
+  console.log('maxmc', maxMembersCount);
+  console.log('mc', membersCount);
+
+  // чек кол-ва участников
+  if (!membersCount || membersCount === 0) {
+    return <div className={styles.error}>Данные о кол-ве участниках отсутствуют</div>;
   }
 
-  const counter = fullness[0] || '0/0';
-  const participants = fullness.slice(1);
+  // чек макс кол-ва участников
+  if (!maxMembersCount || maxMembersCount === 0) {
+    return <div className={styles.error}>Данные о макс. кол-ве участниках отсутствуют</div>;
+  }
 
-  const visibleParticipants = isExpanded ? participants : participants.slice(0, 3);
+  const visibleMembers = isExpanded ? members : members.slice(0, 3);
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
@@ -24,21 +29,23 @@ const ParticipantsBlock = ({ fullness }) => {
 
   return (
     <div className={styles.participants_cont}>
-      <h2 className={styles.title}>
-        Список участников ({counter.match(/\d+\/\d+/)?.[0] || '0/0'})
-      </h2>
+      <h2 className={styles.title}>Список участников ({`${membersCount}/${maxMembersCount}`})</h2>
       <div className={`${styles.listContainer} ${isExpanded ? styles.expanded : ''}`}>
         <ul className={styles.list}>
-          {visibleParticipants.map((name, index) => (
+          {visibleMembers.map((user, index) => (
             <li key={index} className={styles.participant}>
+              {/* CHANGE TO IMAGE FROM ARRAY */}
+              {/* ADD CHECK IF !IMG ? */}
               <img
-                src={`https://api.dicebear.com/5.x/avataaars/svg?seed=${name}`}
-                alt={name}
+                src={`https://api.dicebear.com/5.x/avataaars/svg?seed=${user.name}`}
+                alt="ava"
                 className={styles.avatar}
               />
+              {/* INSERT USER_ID */}
               <Link to="/profile">
-                <span className={styles.nick}>{name}</span>
+                <span className={styles.nick}>{user.name}</span>
               </Link>
+              {/* ADMIN SHOULD BE FIRST EL IN ARRAY */}
               {index === 0 && (
                 <span className={styles.admin}>
                   <img src={crown} className={styles.crown_ic} />
@@ -48,7 +55,7 @@ const ParticipantsBlock = ({ fullness }) => {
           ))}
         </ul>
       </div>
-      {participants.length > 3 && (
+      {membersCount > 3 && (
         <button className={styles.showMore} onClick={toggleExpand}>
           {isExpanded ? 'Скрыть' : 'Показать больше'}
         </button>

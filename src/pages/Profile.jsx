@@ -32,7 +32,7 @@ const Profile = () => {
     const fetchUserProfile = async () => {
       try {
         const response = await fetch(
-          'http://localhost:8080/api/users/get?userId=7b976e64-0f0a-4bcb-83ea-11d8d5159b80',
+          'http://localhost:8080/api/users/get?userId=73d8d2f10-ab48-494e-ad25-c015873deea0',
           {
             method: 'GET',
             headers: {

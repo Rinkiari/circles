@@ -47,14 +47,13 @@ const CreatePrBlock = () => {
 
   const [formValues, setFormValues] = React.useState({
     name: '',
-    maxMembersCount: null,
+    maxMembersCount: 0,
     chat_link: '',
-    city: 'спб', // REMOVE IT!!!
     imageUrl: '',
     timeAndPlaceInfo: '',
     description: '',
     typesNames: [],
-    organizerId: '7b976e64-0f0a-4bcb-83ea-11d8d5159b80', // ВШИЛ
+    organizerId: '3d8d2f10-ab48-494e-ad25-c015873deea0', // ВШИЛ
   });
   console.log('Data:', formValues);
 
@@ -104,6 +103,7 @@ const CreatePrBlock = () => {
 
   const handleNextStep = async () => {
     let fieldsToCheck = [];
+    const TOKEN = localStorage.getItem('authToken');
 
     // if (step === 1) {
     //   fieldsToCheck = ['name', 'maxMembersCount', 'chat_link'];
@@ -124,6 +124,7 @@ const CreatePrBlock = () => {
         const response = await fetch('http://localhost:8080/api/events/new', {
           method: 'POST',
           headers: {
+            Authorization: `Bearer ${TOKEN}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(formValues),
