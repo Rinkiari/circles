@@ -52,12 +52,30 @@
 }
 
 .default_event_image {
-  width: 411px;
-  height: 239px;
   object-fit: contain;
-  border-radius: 69px;
-  border: 6px solid black;
-  box-shadow: 9px 9px #cbcbcb;
+
+  &.home {
+    width: 411px;
+    height: 239px;
+    border-radius: 69px;
+    border: 6px solid black;
+    box-shadow: 9px 9px #cbcbcb;
+  }
+  &.myprofile {
+    width: 278px;
+    height: 162px;
+    border-radius: 50px;
+    border: 4px solid black;
+    box-shadow: 6px 6px #cbcbcb;
+  }
+
+  &.profile {
+    width: 278px;
+    height: 162px;
+    border-radius: 50px;
+    border: 4px solid black;
+    box-shadow: 6px 6px #cbcbcb;
+  }
 }
 
 .event_image {

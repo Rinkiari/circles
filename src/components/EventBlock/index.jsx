@@ -1,4 +1,5 @@
 import React from 'react';
+import { useAuth } from '../../context/AuthContext';
 import styles from './EventBlock.module.scss';
 
 import ParticipantsBlock from '../ParticipantsBlock';
@@ -6,6 +7,7 @@ import { svg_iconsArr } from '../Categories';
 import def_event_image from '../../assets/default_event.png';
 
 const EventBlock = ({
+  id,
   event_ownerID,
   imageUrl,
   name,
@@ -16,7 +18,52 @@ const EventBlock = ({
   types,
   members,
 }) => {
+  const { authData } = useAuth();
+  const [isVlilsya, setIsVlilsya] = React.useState(false);
+
+  React.useEffect(() => {
+    const newIsVlilsya = members.some((obj) => obj.memberId === authData.user_id);
+
+    // Обновляем состояние только если оно изменилось
+    if (isVlilsya !== newIsVlilsya) {
+      setIsVlilsya(newIsVlilsya);
+    }
+  }, [members, authData.user_id, isVlilsya]);
+
+  const userId = authData.user_id;
+  const eventId = id;
+
+  const dataXd = {
+    userId,
+    eventId,
+  };
   const [categoryId, setCategoryId] = React.useState(null); //состояние категорий
+  const handleJoin = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/usersevents/create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${authData.access_token}`,
+        },
+        body: JSON.stringify(dataXd), // Преобразуем объект в JSON
+      });
+
+      if (!response.ok) {
+        // Если статус ответа не в диапазоне 2xx
+        throw new Error(`Ошибка загрузки мероприятия: ${response.status} ${response.statusText}`);
+      }
+
+      const data = await response.json(); // Разбираем тело ответа
+      console.log('Успешный ответ:', data);
+    } catch (error) {
+      console.error('Ошибка запроса:', error.message);
+    }
+  };
+
+  console.log('isVlilsya do', isVlilsya);
+
+  console.log('isVlilsya posle', isVlilsya);
 
   return (
     <div className={styles.global_container}>
@@ -52,7 +99,10 @@ const EventBlock = ({
           </div>
         </div>
         <div className={styles.right_side}>
-          <button className={styles.msg_btn}>НАПИСАТЬ</button>
+          <button onClick={() => handleJoin()} className={styles.msg_btn}>
+            {isVlilsya && 'НАПИСАТЬ'}
+            {!isVlilsya && 'ВЛИТЬСЯ'}
+          </button>
           <ParticipantsBlock
             event_ownerID={event_ownerID}
             members={members}

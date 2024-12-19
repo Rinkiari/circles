@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './ParticipantsBlock.module.scss';
 
 import crown from '../../assets/crown_icon.png';
+import profile_icon from '../../assets/profile.png';
 
 const ParticipantsBlock = ({ event_ownerID, members, maxMembersCount, membersCount }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
@@ -18,7 +19,7 @@ const ParticipantsBlock = ({ event_ownerID, members, maxMembersCount, membersCou
   const myID = authData.user_id;
 
   const handleProfileClick = (id) => {
-    event_ownerID === myID ? navigate('/myprofile/') : navigate(`/profile/${id}`);
+    event_ownerID === myID ? navigate('/myprofile') : navigate(`/profile/${id}`);
   };
 
   // чек кол-ва участников
@@ -33,6 +34,8 @@ const ParticipantsBlock = ({ event_ownerID, members, maxMembersCount, membersCou
 
   const visibleMembers = isExpanded ? members : members.slice(0, 3);
 
+  console.log('Members slice: ', members.slice(0, 3));
+
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
   };
@@ -43,11 +46,14 @@ const ParticipantsBlock = ({ event_ownerID, members, maxMembersCount, membersCou
       <div className={`${styles.listContainer} ${isExpanded ? styles.expanded : ''}`}>
         <ul className={styles.list}>
           {visibleMembers.map((user, index) => (
-            <li key={index} className={styles.participant} onClick={handleProfileClick(user.id)}>
+            <li
+              key={index}
+              className={styles.participant}
+              onClick={() => handleProfileClick(user.memberId)}>
               {/* CHANGE TO IMAGE FROM ARRAY */}
               {/* ADD CHECK IF !IMG ? */}
               <img
-                src={`https://api.dicebear.com/5.x/avataaars/svg?seed=${user.name}`}
+                src={user.imageUrl === '' ? profile_icon : user.imageUrl}
                 alt="ava"
                 className={styles.avatar}
               />

@@ -42,6 +42,12 @@ const Home = () => {
 
   // http://localhost:8080/api/events/all
 
+  console.log('names: ', selectedCategoryNames);
+
+  const smth = {
+    typesNames: selectedCategoryNames,
+  };
+
   React.useEffect(() => {
     const fetchEvents = async () => {
       try {
@@ -51,10 +57,13 @@ const Home = () => {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
               })
-            : await fetch('http://localhost:8080/api/events/all', {
+            : await fetch('http://localhost:8080/api/events/all/types', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: selectedCategoryNames,
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${authData.access_token}`,
+                },
+                body: JSON.stringify(smth),
               });
         const data = await response.json();
         setEvents(data);
@@ -79,12 +88,12 @@ const Home = () => {
         {events.map((obj) => (
           <EventCard
             key={obj.id}
-            eventId={obj.id}
+            id={obj.id}
             name={obj.name}
             imageUrl={obj.imageUrl}
             membersCount={obj.membersCount}
             maxMembersCount={obj.maxMembersCount}
-            organizerId={obj.organizer.id}
+            organizerId={obj.organizerId}
           />
         ))}
       </div>

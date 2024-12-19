@@ -50,7 +50,7 @@ const CreatePrBlock = () => {
   const [formValues, setFormValues] = React.useState({
     name: '',
     maxMembersCount: 0,
-    chat_link: '',
+    chatLink: '',
     imageUrl: '',
     timeAndPlaceInfo: '',
     description: '',
@@ -63,7 +63,7 @@ const CreatePrBlock = () => {
   const infoArr = [
     { label: 'Название', key: 'name' },
     { label: 'Количество человек', key: 'maxMembersCount' },
-    { label: 'Ссылка на чат', key: 'chat_link' },
+    { label: 'Ссылка на чат', key: 'chatLink' },
   ];
 
   const handleInputChange = (key, value) => {

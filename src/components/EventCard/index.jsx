@@ -5,18 +5,27 @@ import styles from './EventCard.module.scss';
 import crown from '../../assets/crown_icon_big.png';
 import def_event_image from '../../assets/default_event.png';
 
-const EventCard = ({ eventId, organizerId, name, imageUrl, membersCount, maxMembersCount }) => {
+const EventCard = ({ id, organizerId, name, imageUrl, membersCount, maxMembersCount }) => {
   const location = useLocation();
+
   const navigate = useNavigate();
 
   const { authData } = useAuth();
   const currentUserId = authData.user_id;
   const isAdmin = currentUserId === organizerId ? true : false;
 
-  const pageClass = location.pathname === '/' ? 'home' : location.pathname.slice(1);
+  // const pageClass = location.pathname === '/' ? 'home' : location.pathname.slice(1);
+  const pageClass =
+    location.pathname === '/'
+      ? 'home'
+      : location.pathname === '/myprofile'
+      ? 'myprofile'
+      : location.pathname.startsWith('/profile')
+      ? 'profile'
+      : location.pathname.slice(1);
 
   const handleClick = () => {
-    navigate(`/event/${eventId}`);
+    navigate(`/event/${id}`);
   };
 
   return (
@@ -24,7 +33,7 @@ const EventCard = ({ eventId, organizerId, name, imageUrl, membersCount, maxMemb
       {imageUrl === '' ? (
         <img
           src={def_event_image}
-          alt="defaul img"
+          alt="default img"
           className={`${styles.default_event_image} ${styles[pageClass]}`}
         />
       ) : (

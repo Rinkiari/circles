@@ -53,7 +53,8 @@ const Event = () => {
       <Header />
       {!isVisibleReq && (
         <EventBlock
-          event_ownerID={eventData.organizer.id}
+          id={id}
+          event_ownerID={eventData.organizerId}
           timeAndPlaceInfo={eventData.timeAndPlaceInfo}
           imageUrl={eventData.imageUrl}
           name={eventData.name}
