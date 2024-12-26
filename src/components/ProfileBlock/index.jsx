@@ -10,6 +10,28 @@ import settings from '../../assets/settings_icon.png';
 import default_user_avatar from '../../assets/user.png';
 
 const ProfileBlock = ({ value }) => {
+  function formatDate(dateString) {
+    const months = [
+      'января',
+      'февраля',
+      'марта',
+      'апреля',
+      'мая',
+      'июня',
+      'июля',
+      'августа',
+      'сентября',
+      'октября',
+      'ноября',
+      'декабря',
+    ];
+
+    const [year, month, day] = dateString.split('-');
+    const monthName = months[parseInt(month, 10) - 1];
+
+    return `${parseInt(day, 10)} ${monthName} ${year} г.`;
+  }
+
   const fileInputRef = React.useRef(null);
 
   const handleOverlayClick = () => {
@@ -184,7 +206,7 @@ const ProfileBlock = ({ value }) => {
               <div className={`${styles.right_side_container} ${styles[pageClass]}`}>
                 <div className={styles.birth_container}>
                   <h4>День рождения</h4>
-                  <p>{dateOfBirth}</p>
+                  <p>{formatDate(dateOfBirth)}</p>
                 </div>
                 <div className={styles.birth_container}>
                   <h4>Город</h4>
@@ -204,7 +226,7 @@ const ProfileBlock = ({ value }) => {
                 <div>
                   <h4>День рождения и город</h4>
                   <p>
-                    {dateOfBirth}, {city}
+                    {formatDate(dateOfBirth)}, {city}
                   </p>
                 </div>
                 <div className={styles.about_container}>

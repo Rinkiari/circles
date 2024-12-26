@@ -61,7 +61,7 @@ const FillMyProfileBlock = () => {
     { label: 'Имя', key: 'name' },
     { label: 'Фамилия', key: 'surname' },
     { label: 'Пол', key: 'gender' },
-    { label: 'День рождения', key: 'dateOfBirth' },
+    { label: 'День рождения: год-месяц-день', key: 'dateOfBirth' },
     { label: 'Город', key: 'city' },
   ];
 
@@ -89,6 +89,7 @@ const FillMyProfileBlock = () => {
   };
 
   const handleNextStep = async () => {
+    // eslint-disable-next-line no-unused-vars
     let fieldsToCheck = [];
 
     // if (step === 1) {
