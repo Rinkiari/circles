@@ -133,6 +133,42 @@ const FillMyProfileBlock = () => {
     }
   };
 
+  React.useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/api/users/get?userId=${authData.user_id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${authData.access_token}`,
+            },
+          },
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          setFormValues({
+            name: data.name || '',
+            surname: data.surname || '',
+            city: data.city || '',
+            imageUrl: data.imageUrl || '',
+            dateOfBirth: data.dateOfBirth || '',
+            gender: data.gender || 0,
+            interestsNames: data.interestNames || [],
+            bio: data.bio || '',
+          });
+          setActiveCategories(new Set(data.interestNames || []));
+        } else {
+          throw new Error('Ошибка загрузки данных пользователя.');
+        }
+      } catch (error) {
+        alert(`Ошибка загрузки: ${error.message}`);
+      }
+    };
+
+    fetchUserData();
+  }, [authData]);
+
   return (
     <div className={styles.main_container}>
       <div className={styles.top_inner_cont}>
