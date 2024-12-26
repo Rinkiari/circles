@@ -38,8 +38,8 @@ const MyProfile = () => {
     fetchProfileInfo();
   }, [authData]);
 
-  if (isLoading) return <div>Загрузка...</div>;
-  if (error) return <div>Ошибка: {error}</div>;
+  // if (isLoading) return <div>Загрузка...</div>;
+  // if (error) return <div>Ошибка: {error}</div>;
 
   return (
     <>
