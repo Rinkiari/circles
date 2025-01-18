@@ -41,6 +41,7 @@ const ProfileBlock = ({ value }) => {
     fileInputRef.current.click();
   };
 
+  // formatData
   const handleFileChange = async (event) => {
     const file = event.target.files[0]; // Получаем выбранный файл
 
@@ -78,6 +79,8 @@ const ProfileBlock = ({ value }) => {
     }
   };
 
+  const MAX_FILE_SIZE = 6 * 1024 * 1024; // 6 МБ
+
   const handleFileChange64 = async (event) => {
     const file = event.target.files[0]; // Получаем выбранный файл
 
@@ -91,10 +94,20 @@ const ProfileBlock = ({ value }) => {
       return;
     }
 
+    if (file.size > MAX_FILE_SIZE) {
+      alert('Размер файла не должен превышать 6 МБ.');
+      return;
+    }
+
     // Преобразуем файл в Base64
     const reader = new FileReader();
     reader.onload = async () => {
       const base64Image = reader.result; // Здесь содержится Base64 строка
+
+      const updatedValue = {
+        ...value, // копирование всех полей из value
+        imageUrl: base64Image, // замена поля imageUrl
+      };
 
       try {
         // Отправляем Base64 строку на сервер (ТОЛЬКО ОДНО ПОЛЕ imageUrl !!!)
@@ -106,7 +119,7 @@ const ProfileBlock = ({ value }) => {
               'Content-Type': 'application/json', // Указываем JSON формат
               Authorization: `Bearer ${authData.access_token}`,
             },
-            body: JSON.stringify({ imageUrl: base64Image }), // Передаём изображение в JSON
+            body: JSON.stringify(updatedValue), // Передаём изображение в JSON
           },
         );
 
@@ -114,6 +127,9 @@ const ProfileBlock = ({ value }) => {
           const data = await response.json();
           alert('Изображение успешно загружено!');
           console.log('Ответ сервера:', data);
+
+          // Перезагрузка страницы
+          window.location.reload();
         } else {
           alert('Ошибка при загрузке изображения.');
           console.error('Ошибка загрузки. Код ответа:', response.status);
