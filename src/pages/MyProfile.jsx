@@ -27,6 +27,8 @@ const MyProfile = () => {
         }
 
         const jsonRes = await response.json();
+        console.log('jsonRES: ', jsonRes);
+
         setMyProfileInfo(jsonRes);
       } catch (err) {
         setError(err.message);

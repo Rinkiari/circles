@@ -1,4 +1,5 @@
 import React from 'react';
+import { useAuth } from '../../context/AuthContext';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +11,8 @@ import settings from '../../assets/settings_icon.png';
 import default_user_avatar from '../../assets/user.png';
 
 const ProfileBlock = ({ value }) => {
+  const { authData } = useAuth();
+
   function formatDate(dateString) {
     const months = [
       'января',
@@ -94,14 +97,18 @@ const ProfileBlock = ({ value }) => {
       const base64Image = reader.result; // Здесь содержится Base64 строка
 
       try {
-        // Отправляем Base64 строку на сервер
-        const response = await fetch('https://your-backend.com/upload', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json', // Указываем JSON формат
+        // Отправляем Base64 строку на сервер (ТОЛЬКО ОДНО ПОЛЕ imageUrl !!!)
+        const response = await fetch(
+          `http://localhost:8080/api/users/update?userId=${authData.user_id}`,
+          {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json', // Указываем JSON формат
+              Authorization: `Bearer ${authData.access_token}`,
+            },
+            body: JSON.stringify({ imageUrl: base64Image }), // Передаём изображение в JSON
           },
-          body: JSON.stringify({ image: base64Image }), // Передаём изображение в JSON
-        });
+        );
 
         if (response.ok) {
           const data = await response.json();
@@ -195,7 +202,7 @@ const ProfileBlock = ({ value }) => {
                     accept="image/*"
                     style={{ display: 'none' }}
                     ref={fileInputRef}
-                    onChange={handleFileChange}
+                    onChange={handleFileChange64}
                   />
                 </div>
               ) : (
