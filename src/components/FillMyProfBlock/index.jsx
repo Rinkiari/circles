@@ -51,24 +51,24 @@ const FillMyProfileBlock = () => {
     imageUrl: '',
     dateOfBirth: '',
     role: 0,
-    gender: 0,
+    gender: '',
     interestsNames: [],
     bio: '',
   });
 
   // mассив для генерации placeholder'ов
   const infoArr = [
-    { label: 'Имя', key: 'name' },
-    { label: 'Фамилия', key: 'surname' },
-    { label: 'Пол', key: 'gender' },
-    { label: 'День рождения: год-месяц-день', key: 'dateOfBirth' },
-    { label: 'Город', key: 'city' },
+    { label: 'Имя', key: 'name', type: 'text' },
+    { label: 'Фамилия', key: 'surname', type: 'text' },
+    { label: 'Пол', key: 'gender', type: 'select', options: ['Мужской', 'Женский'] },
+    { label: 'День рождения: год-месяц-день', key: 'dateOfBirth', type: 'text' },
+    { label: 'Город', key: 'city', type: 'text' },
   ];
 
   const handleInputChange = (key, value) => {
     setFormValues((prev) => ({
       ...prev,
-      [key]: value,
+      [key]: key === 'gender' ? Number(value) : value, // Конвертируем gender в число
     }));
   };
 
@@ -154,7 +154,14 @@ const FillMyProfileBlock = () => {
             city: data.city || '',
             imageUrl: data.imageUrl || '',
             dateOfBirth: data.dateOfBirth || '',
-            gender: data.gender || 0,
+            gender:
+              data.gender === 'Neutral'
+                ? ''
+                : data.gender === 'Male'
+                ? 0
+                : data.gender === 'Female'
+                ? 1
+                : '',
             interestsNames: data.interestNames || [],
             bio: data.bio || '',
           });
@@ -186,16 +193,35 @@ const FillMyProfileBlock = () => {
           <div className={styles.general_info_box}>
             <form>
               {step === 1 &&
-                infoArr.map(({ label, key }) => (
-                  <input
-                    required
-                    className={styles.inputek}
-                    key={key}
-                    placeholder={label}
-                    value={formValues[key] || ''}
-                    onChange={(e) => handleInputChange(key, e.target.value)}
-                  />
-                ))}
+                infoArr.map(({ label, key, type, options }) => {
+                  if (type === 'select') {
+                    // Рендер для выпадающего списка
+                    return (
+                      <select
+                        key={key}
+                        className={styles.inputek}
+                        value={formValues[key] !== undefined ? formValues[key] : ''} // убеждаемся, что значение задано
+                        onChange={(e) => handleInputChange(key, e.target.value)}>
+                        <option value="" disabled>
+                          {label} {/* show текст как "Пол" */}
+                        </option>
+                        <option value={0}>Мужской</option>
+                        <option value={1}>Женский</option>
+                      </select>
+                    );
+                  }
+                  // Рендер для обычного input
+                  return (
+                    <input
+                      required
+                      className={styles.inputek}
+                      key={key}
+                      placeholder={label}
+                      value={formValues[key] || ''}
+                      onChange={(e) => handleInputChange(key, e.target.value)}
+                    />
+                  );
+                })}
               {step === 2 && (
                 <>
                   <h4>Черканите пару строк о своей многосторонней личности!</h4>
