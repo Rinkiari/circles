@@ -8,7 +8,7 @@ import logout_icon from '../../assets/logout.png';
 
 import Search from '../Search';
 
-const Header = () => {
+const Header = ({ searchValue, setSearchValue }) => {
   const { authData, logout } = useAuth();
 
   const location = useLocation();
@@ -33,7 +33,7 @@ const Header = () => {
         </div>
 
         <div className={styles.right_side}>
-          <Search />
+          <Search searchValue={searchValue} setSearchValue={setSearchValue} />
           {authData.access_token ? (
             <>
               <Link to="/myprofile">

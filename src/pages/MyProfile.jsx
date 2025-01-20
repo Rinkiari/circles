@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import Header from '../components/Header';
 import ProfileBlock from '../components/ProfileBlock';
 
-const MyProfile = () => {
+const MyProfile = ({ searchValue, setSearchValue }) => {
   const { authData } = useAuth();
   const [myProfileInfo, setMyProfileInfo] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -46,7 +46,7 @@ const MyProfile = () => {
 
   return (
     <>
-      <Header />
+      <Header searchValue={searchValue} setSearchValue={setSearchValue} />
       <ProfileBlock value={myProfileInfo} />
     </>
   );

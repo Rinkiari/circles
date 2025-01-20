@@ -6,8 +6,10 @@ import Header from '../components/Header';
 import Categories from '../components/Categories';
 import EventCard from '../components/EventCard';
 
-const Home = () => {
+const Home = ({ searchValue, setSearchValue }) => {
   const { authData } = useAuth();
+
+  const [events, setEvents] = React.useState([]);
 
   const categoriesArr = [
     'ТВОРЧЕСТВО',
@@ -22,7 +24,6 @@ const Home = () => {
   ];
 
   const [selectedCategories, setSelectedCategories] = React.useState([]); //состояние категорий
-  const [events, setEvents] = React.useState([]);
 
   const handleToggleCategory = (categoryIndex) => {
     setSelectedCategories(
@@ -32,17 +33,9 @@ const Home = () => {
           : [...prev, categoryIndex], // добавляем категорию, если она не выбрана
     );
   };
-  console.log(selectedCategories);
+  console.log(selectedCategories, 'arr of SELECTED CATEGORIES');
 
   const selectedCategoryNames = selectedCategories.map((index) => categoriesArr[index]);
-  console.log('names', selectedCategoryNames);
-
-  // https://e895c70e3c56e1a7.mokky.dev/events?categories=
-  // https://e895c70e3c56e1a7.mokky.dev/events
-
-  // http://localhost:8080/api/events/all
-
-  console.log('names: ', selectedCategoryNames);
 
   const smth = {
     typesNames: selectedCategoryNames,
@@ -76,27 +69,34 @@ const Home = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCategories]);
 
+  const projects = events
+    .filter((obj) => {
+      if (obj.name.toLowerCase().includes(searchValue.toLowerCase())) {
+        return true;
+      }
+      return false;
+    })
+    .map((obj) => (
+      <EventCard
+        key={obj.id}
+        id={obj.id}
+        name={obj.name}
+        imageUrl={obj.imageUrl}
+        membersCount={obj.membersCount}
+        maxMembersCount={obj.maxMembersCount}
+        organizerId={obj.organizerId}
+      />
+    ));
+
   return (
     <>
-      <Header />
+      <Header searchValue={searchValue} setSearchValue={setSearchValue} />
       <Categories
         categoriesArr={categoriesArr}
         selectedCategories={selectedCategories}
         onToggleCategory={handleToggleCategory}
       />
-      <div className="event_container">
-        {events.map((obj) => (
-          <EventCard
-            key={obj.id}
-            id={obj.id}
-            name={obj.name}
-            imageUrl={obj.imageUrl}
-            membersCount={obj.membersCount}
-            maxMembersCount={obj.maxMembersCount}
-            organizerId={obj.organizerId}
-          />
-        ))}
-      </div>
+      <div className="event_container">{projects}</div>
     </>
   );
 };

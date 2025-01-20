@@ -5,7 +5,7 @@ import EventBlock from '../components/EventBlock';
 import Header from '../components/Header';
 import RequestsBlock from '../components/RequestsBlock';
 
-const Event = () => {
+const Event = ({ searchValue, setSearchValue }) => {
   const { id } = useParams(); // получаем id из URL
   const { authData } = useAuth();
   const [eventData, setEventData] = React.useState(null);
@@ -50,7 +50,7 @@ const Event = () => {
 
   return (
     <>
-      <Header />
+      <Header searchValue={searchValue} setSearchValue={setSearchValue} />
       {!isVisibleReq && (
         <EventBlock
           id={id}

@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import ProfileBlock from '../components/ProfileBlock';
 
-const Profile = () => {
+const Profile = ({ searchValue, setSearchValue }) => {
   const { authData } = useAuth();
   const { id } = useParams();
   console.log('id from params', id);
@@ -42,7 +42,7 @@ const Profile = () => {
 
   return (
     <>
-      <Header />
+      <Header searchValue={searchValue} setSearchValue={setSearchValue} />
       <ProfileBlock value={profileInfo} />
     </>
   );

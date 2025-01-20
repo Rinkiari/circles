@@ -2,10 +2,10 @@ import React from 'react';
 import Header from '../components/Header';
 import CreatePrBlock from '../components/CreatePrBlock';
 
-const CreateProject = () => {
+const CreateProject = ({ searchValue, setSearchValue }) => {
   return (
     <>
-      <Header />
+      <Header searchValue={searchValue} setSearchValue={setSearchValue} />
       <CreatePrBlock />
     </>
   );

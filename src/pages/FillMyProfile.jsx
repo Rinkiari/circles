@@ -1,10 +1,10 @@
-import Header from "../components/Header";
-import FillMyProfileBlock from "../components/FillMyProfBlock";
+import Header from '../components/Header';
+import FillMyProfileBlock from '../components/FillMyProfBlock';
 
-const FillMyProfile = () => {
+const FillMyProfile = ({ searchValue, setSearchValue }) => {
   return (
     <>
-      <Header />
+      <Header searchValue={searchValue} setSearchValue={setSearchValue} />
       <FillMyProfileBlock />
     </>
   );
