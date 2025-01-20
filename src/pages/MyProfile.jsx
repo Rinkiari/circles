@@ -16,6 +16,7 @@ const MyProfile = () => {
         const response = await fetch(
           `http://localhost:8080/api/users/get?userId=${authData.user_id}`,
           {
+            method: 'GET',
             headers: {
               Authorization: `Bearer ${authData.access_token}`,
             },

@@ -102,31 +102,28 @@ const ProfileBlock = ({ value }) => {
     // Преобразуем файл в Base64
     const reader = new FileReader();
     reader.onload = async () => {
-      const base64Image = reader.result; // Здесь содержится Base64 строка
-
-      const updatedValue = {
-        ...value, // копирование всех полей из value
-        imageUrl: base64Image, // замена поля imageUrl
+      const base64Image = {
+        imageUrl: reader.result, // Здесь содержится Base64 строка
       };
+
+      console.log(base64Image);
 
       try {
         // Отправляем Base64 строку на сервер (ТОЛЬКО ОДНО ПОЛЕ imageUrl !!!)
         const response = await fetch(
-          `http://localhost:8080/api/users/update?userId=${authData.user_id}`,
+          `http://localhost:8080/api/users/changeImage?userId=${authData.user_id}`,
           {
-            method: 'PUT',
+            method: 'PATCH',
             headers: {
-              'Content-Type': 'application/json', // Указываем JSON формат
+              'Content-Type': 'application/json',
               Authorization: `Bearer ${authData.access_token}`,
             },
-            body: JSON.stringify(updatedValue), // Передаём изображение в JSON
+            body: JSON.stringify(base64Image), // Передаём изображение в JSON
           },
         );
 
         if (response.ok) {
-          const data = await response.json();
           alert('Изображение успешно загружено!');
-          console.log('Ответ сервера:', data);
 
           // Перезагрузка страницы
           window.location.reload();
