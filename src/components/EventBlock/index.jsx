@@ -9,6 +9,7 @@ import def_event_image from '../../assets/default_event.png';
 const EventBlock = ({
   id,
   event_ownerID,
+  chatLink,
   imageUrl,
   name,
   description,
@@ -17,6 +18,7 @@ const EventBlock = ({
   membersCount,
   types,
   members,
+  setIsVisibleReq,
 }) => {
   const { authData } = useAuth();
   const [isVlilsya, setIsVlilsya] = React.useState(false);
@@ -46,7 +48,7 @@ const EventBlock = ({
           'Content-Type': 'application/json',
           Authorization: `Bearer ${authData.access_token}`,
         },
-        body: JSON.stringify(dataXd), // Преобразуем объект в JSON
+        body: JSON.stringify(dataXd),
       });
 
       if (!response.ok) {
@@ -99,10 +101,20 @@ const EventBlock = ({
           </div>
         </div>
         <div className={styles.right_side}>
-          <button onClick={() => handleJoin()} className={styles.msg_btn}>
-            {isVlilsya && 'НАПИСАТЬ'}
-            {!isVlilsya && 'ВЛИТЬСЯ'}
-          </button>
+          {event_ownerID === userId ? (
+            <button onClick={() => setIsVisibleReq(true)} className={styles.msg_btn}>
+              ЗАЯВКИ
+            </button>
+          ) : isVlilsya ? (
+            <button onClick={() => alert(`Ждём вас в ${chatLink}`)} className={styles.msg_btn}>
+              НАПИСАТЬ
+            </button>
+          ) : (
+            <button onClick={() => handleJoin()} className={styles.msg_btn}>
+              ВЛИТЬСЯ
+            </button>
+          )}
+
           <ParticipantsBlock
             event_ownerID={event_ownerID}
             members={members}

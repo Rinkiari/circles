@@ -8,13 +8,16 @@ import RequestsBlock from '../components/RequestsBlock';
 const Event = ({ searchValue, setSearchValue }) => {
   const { id } = useParams(); // получаем id из URL
   const { authData } = useAuth();
+
   const [eventData, setEventData] = React.useState(null);
   const [isVisibleReq, setIsVisibleReq] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(null);
 
-  // http://localhost:8080/api/events/getById?eventId=766ebc09-39cb-4f2e-955a-65febef227a8
-  // https://e895c70e3c56e1a7.mokky.dev/events/${id}
+  // url for test
+  // https://e895c70e3c56e1a7.mokky.dev/events
+
+  // orig url fetch
 
   React.useEffect(() => {
     fetch(`http://localhost:8080/api/events/getById?eventId=${id}`, {
@@ -56,6 +59,7 @@ const Event = ({ searchValue, setSearchValue }) => {
           id={id}
           event_ownerID={eventData.organizerId}
           timeAndPlaceInfo={eventData.timeAndPlaceInfo}
+          chatLink={eventData.chatLink}
           imageUrl={eventData.imageUrl}
           name={eventData.name}
           description={eventData.description}
@@ -63,9 +67,10 @@ const Event = ({ searchValue, setSearchValue }) => {
           members={eventData.members}
           maxMembersCount={eventData.maxMembersCount}
           membersCount={eventData.membersCount}
+          setIsVisibleReq={setIsVisibleReq}
         />
       )}
-      {isVisibleReq && <RequestsBlock reqUsers={reqUsers} />}
+      {isVisibleReq && <RequestsBlock eventName={eventData.name} reqUsers={reqUsers} />}
     </>
   );
 };
