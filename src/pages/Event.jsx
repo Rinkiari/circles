@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
+import { ClipLoader } from 'react-spinners';
 import { useParams } from 'react-router-dom';
 import EventBlock from '../components/EventBlock';
 import Header from '../components/Header';
@@ -20,6 +21,7 @@ const Event = ({ searchValue, setSearchValue }) => {
   // orig url fetch
 
   React.useEffect(() => {
+    setLoading(true);
     fetch(`http://localhost:8080/api/events/getById?eventId=${id}`, {
       Authorization: `Bearer ${authData.access_token}`,
     })
@@ -32,7 +34,6 @@ const Event = ({ searchValue, setSearchValue }) => {
       .then((data) => {
         setEventData(data);
         console.log(eventData);
-
         setLoading(false);
       })
       .catch((err) => {
@@ -42,7 +43,17 @@ const Event = ({ searchValue, setSearchValue }) => {
   }, []);
 
   if (loading) {
-    return <div>Загрузка...</div>;
+    return (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+        }}>
+        <ClipLoader color="#FA8072" size={53} />
+      </div>
+    );
   }
 
   if (error) {
