@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import styles from './EventBlock.module.scss';
 
 import ParticipantsBlock from '../ParticipantsBlock';
@@ -20,6 +21,7 @@ const EventBlock = ({
   members,
   setIsVisibleReq,
 }) => {
+  const navigate = useNavigate();
   const { authData } = useAuth();
   const [isVlilsya, setIsVlilsya] = React.useState(false);
 
@@ -41,6 +43,17 @@ const EventBlock = ({
   };
   const [categoryId, setCategoryId] = React.useState(null); //состояние категорий
   const handleJoin = async () => {
+    if (userId === null) {
+      alert('Для начала авторизируйтесь.');
+      navigate('/login');
+      return;
+    }
+
+    if (membersCount === maxMembersCount) {
+      alert('На данный момент мероприятие заполнено!');
+      return;
+    }
+
     try {
       const response = await fetch(`http://localhost:8080/api/usersevents/create`, {
         method: 'POST',
@@ -58,6 +71,7 @@ const EventBlock = ({
 
       const data = await response.json(); // Разбираем тело ответа
       console.log('Успешный ответ:', data);
+      window.location.reload();
     } catch (error) {
       console.error('Ошибка запроса:', error.message);
     }
