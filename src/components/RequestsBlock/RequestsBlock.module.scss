@@ -2,12 +2,39 @@
   width: 902px;
   margin: 30px auto;
 
+  .cont_h2 {
+    width: 528px;
+    max-height: 100px;
+
+    h2 {
+      font-size: 32px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+  }
+
+  .progressbar {
+    position: relative;
+
+    .text_end {
+      position: absolute;
+      bottom: 10px;
+      left: 769px;
+
+      font-size: 24px;
+      font-weight: 600;
+      color: #969696;
+      cursor: pointer;
+    }
+  }
+
   .users_cont {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     gap: 40px;
+    margin-top: 32px;
 
     .user_wrapper {
       width: 170px;
