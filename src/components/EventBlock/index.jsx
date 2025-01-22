@@ -6,6 +6,7 @@ import styles from './EventBlock.module.scss';
 import ParticipantsBlock from '../ParticipantsBlock';
 import { svg_iconsArr } from '../Categories';
 import def_event_image from '../../assets/default_event.png';
+import icon_bin from '../../assets/bin.png';
 
 const EventBlock = ({
   id,
@@ -24,6 +25,7 @@ const EventBlock = ({
   const { authData } = useAuth();
   const userId = authData.user_id;
   const eventId = id;
+
   const navigate = useNavigate();
 
   const [categoryId, setCategoryId] = React.useState(null); //состояние категорий
@@ -34,6 +36,19 @@ const EventBlock = ({
   }, [requestStatus]); // Будет срабатывать каждый раз, когда изменяется requestStatus
 
   const [isLoading, setIsLoading] = React.useState(false); // Состояние загрузки
+
+  const reqClass =
+    requestStatus === 'REVIEWING'
+      ? 'REVIEWING'
+      : requestStatus === 'ACCEPTED'
+      ? 'ACCEPTED'
+      : requestStatus === 'REJECTED'
+      ? 'REJECTED'
+      : requestStatus === 'NO_REQUEST'
+      ? 'NO_REQUEST'
+      : 'NO_REQUEST';
+
+  console.log(reqClass);
 
   // Проверка статуса заявки
   // Функция для проверки заявок и установки статуса
@@ -69,7 +84,11 @@ const EventBlock = ({
       console.log('Members:', members);
       const isMember = members.find((obj) => obj.memberId === userId);
       if (isMember) {
-        setRequestStatus('ACCEPTED');
+        if (event_ownerID === userId) {
+          setRequestStatus('NO_REQUEST');
+        } else {
+          setRequestStatus('ACCEPTED');
+        }
       }
     } catch (error) {
       console.error('Ошибка запроса статуса заявок:', error.message);
@@ -127,6 +146,7 @@ const EventBlock = ({
       alert(`Вы приняты! Перейдите в чат: ${chatLink}`);
     } else if (requestStatus === 'REVIEWING') {
       console.log('Статус заявки: REVIEWING. Заявка на рассмотрении.');
+      alert(`Заявка на рассмотрении`);
       // Ничего не делаем
     } else if (requestStatus === 'REJECTED') {
       console.log('Статус заявки: REJECTED. Заявка отклонена.');
@@ -140,7 +160,7 @@ const EventBlock = ({
   const getButtonText = () => {
     switch (requestStatus) {
       case 'REVIEWING':
-        return 'РАССМОТРЕНИЕ';
+        return 'ВЛИТЬСЯ';
       case 'ACCEPTED':
         return 'НАПИСАТЬ';
       case 'REJECTED':
@@ -155,10 +175,38 @@ const EventBlock = ({
     fetchRequestStatus(); // Проверяем статус при загрузке страницы
   }, []);
 
+  const handleDelete = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`http://localhost:8080/api/events/delete?eventId=${eventId}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${authData.access_token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Ошибка удаления: ${response.status} ${response.statusText}`);
+      }
+
+      alert('Мероприятие удалено...');
+      navigate('/myprofile');
+    } catch (error) {
+      console.error('Ошибка отправки заявки на удаление:', error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className={styles.global_container}>
       <div className={styles.top_container}>
         <h2 className={styles.event_title}>{name}</h2>
+        {event_ownerID === userId ? (
+          <img src={icon_bin} className={styles.bin_ic} onClick={handleDelete} alt="" />
+        ) : (
+          ''
+        )}
       </div>
       <div className={styles.bottom_container}>
         <div className={styles.left_side}>
@@ -189,11 +237,13 @@ const EventBlock = ({
         </div>
         <div className={styles.right_side}>
           {event_ownerID === userId ? (
-            <button onClick={() => setIsVisibleReq(true)} className={styles.msg_btn}>
+            <button
+              onClick={() => setIsVisibleReq(true)}
+              className={`${styles.msg_btn} ${styles[reqClass]}`}>
               ЗАЯВКИ
             </button>
           ) : (
-            <button onClick={handleButtonClick} className={styles.msg_btn}>
+            <button onClick={handleButtonClick} className={`${styles.msg_btn} ${styles[reqClass]}`}>
               {getButtonText()}
             </button>
           )}
