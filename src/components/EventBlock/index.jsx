@@ -21,65 +21,139 @@ const EventBlock = ({
   members,
   setIsVisibleReq,
 }) => {
-  const navigate = useNavigate();
   const { authData } = useAuth();
-  const [isVlilsya, setIsVlilsya] = React.useState(false);
-
-  React.useEffect(() => {
-    const newIsVlilsya = members.some((obj) => obj.memberId === authData.user_id);
-
-    // Обновляем состояние только если оно изменилось
-    if (isVlilsya !== newIsVlilsya) {
-      setIsVlilsya(newIsVlilsya);
-    }
-  }, [members, authData.user_id, isVlilsya]);
-
   const userId = authData.user_id;
   const eventId = id;
+  const navigate = useNavigate();
 
-  const dataXd = {
-    userId,
-    eventId,
-  };
   const [categoryId, setCategoryId] = React.useState(null); //состояние категорий
+
+  const [requestStatus, setRequestStatus] = React.useState('NO_REQUEST'); // Состояние для статуса заявки
+  React.useEffect(() => {
+    console.log('requestStatus обновлен:', requestStatus); // Лог для отслеживания изменений состояния
+  }, [requestStatus]); // Будет срабатывать каждый раз, когда изменяется requestStatus
+
+  const [isLoading, setIsLoading] = React.useState(false); // Состояние загрузки
+
+  // Проверка статуса заявки
+  // Функция для проверки заявок и установки статуса
+  const fetchRequestStatus = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/requests/get?eventId=${id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${authData.access_token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Ошибка получения заявок');
+      }
+
+      const data = await response.json(); // Ожидаем массив объектов
+      console.log('Ответ сервера:', data);
+
+      // Ищем объект, где userId совпадает с нашим userId
+      const userRequest = data.find((request) => request.userId === userId);
+
+      if (userRequest) {
+        // Если нашли, устанавливаем статус из объекта
+        setRequestStatus(userRequest.status || 'NO_REQUEST');
+      } else {
+        // Если не нашли, статус по умолчанию
+        console.log('Не нашли статус(');
+
+        setRequestStatus('NO_REQUEST');
+      }
+      console.log('Members:', members);
+      const isMember = members.find((obj) => obj.memberId === userId);
+      if (isMember) {
+        setRequestStatus('ACCEPTED');
+      }
+    } catch (error) {
+      console.error('Ошибка запроса статуса заявок:', error.message);
+      setRequestStatus('NO_REQUEST'); // В случае ошибки ставим статус по умолчанию
+    }
+  };
+
+  // Отправка заявки
   const handleJoin = async () => {
-    if (userId === null) {
+    if (!userId) {
       alert('Для начала авторизируйтесь.');
       navigate('/login');
       return;
     }
 
-    if (membersCount === maxMembersCount) {
+    if (membersCount >= maxMembersCount) {
       alert('На данный момент мероприятие заполнено!');
       return;
     }
 
     try {
-      const response = await fetch(`http://localhost:8080/api/usersevents/create`, {
+      setIsLoading(true);
+      const response = await fetch(`http://localhost:8080/api/requests/new`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${authData.access_token}`,
         },
-        body: JSON.stringify(dataXd),
+        body: JSON.stringify({ eventId, userId }),
       });
 
       if (!response.ok) {
-        // Если статус ответа не в диапазоне 2xx
-        throw new Error(`Ошибка загрузки мероприятия: ${response.status} ${response.statusText}`);
+        throw new Error(`Ошибка отправки заявки: ${response.status} ${response.statusText}`);
       }
 
-      const data = await response.json(); // Разбираем тело ответа
-      console.log('Успешный ответ:', data);
-      window.location.reload();
+      await fetchRequestStatus(); // Обновляем статус сразу после отправки
+      alert('Заявка подана');
     } catch (error) {
-      console.error('Ошибка запроса:', error.message);
+      console.error('Ошибка отправки заявки:', error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  console.log('isVlilsya do', isVlilsya);
+  // Логика нажатия на кнопку в зависимости от статуса
+  const handleButtonClick = () => {
+    console.log('requestStatus на момент нажатия кнопки:', requestStatus); // Лог перед проверкой
+    console.log('Тип данных requestStatus:', typeof requestStatus);
 
-  console.log('isVlilsya posle', isVlilsya);
+    if (requestStatus === 'NO_REQUEST') {
+      console.log('Статус заявки: NO_REQUEST. Отправляем заявку.');
+      handleJoin(); // Отправляем заявку
+    } else if (requestStatus === 'ACCEPTED') {
+      console.log('Статус заявки: ACCEPTED. Перехожу в чат.');
+      alert(`Вы приняты! Перейдите в чат: ${chatLink}`);
+    } else if (requestStatus === 'REVIEWING') {
+      console.log('Статус заявки: REVIEWING. Заявка на рассмотрении.');
+      // Ничего не делаем
+    } else if (requestStatus === 'REJECTED') {
+      console.log('Статус заявки: REJECTED. Заявка отклонена.');
+      // Ничего не делаем
+    } else {
+      console.log('Неизвестный статус заявки:', requestStatus);
+    }
+  };
+
+  // Текст кнопки в зависимости от статуса заявки
+  const getButtonText = () => {
+    switch (requestStatus) {
+      case 'REVIEWING':
+        return 'Рассмотрение';
+      case 'ACCEPTED':
+        return 'НАПИСАТЬ';
+      case 'REJECTED':
+        return 'Заявка отклонена';
+      case 'NO_REQUEST':
+      default:
+        return 'Влиться';
+    }
+  };
+
+  React.useEffect(() => {
+    fetchRequestStatus(); // Проверяем статус при загрузке страницы
+  }, []);
 
   return (
     <div className={styles.global_container}>
@@ -88,12 +162,11 @@ const EventBlock = ({
       </div>
       <div className={styles.bottom_container}>
         <div className={styles.left_side}>
-          {imageUrl === '' ? (
-            <img src={def_event_image} alt="default Event" className={styles.def_card_img} />
-          ) : (
+          {imageUrl ? (
             <img src={imageUrl} alt="Event" className={styles.card_img} />
+          ) : (
+            <img src={def_event_image} alt="Default Event" className={styles.def_card_img} />
           )}
-
           <ul>
             {types.map((type) => (
               <button
@@ -119,16 +192,11 @@ const EventBlock = ({
             <button onClick={() => setIsVisibleReq(true)} className={styles.msg_btn}>
               ЗАЯВКИ
             </button>
-          ) : isVlilsya ? (
-            <button onClick={() => alert(`Ждём вас в ${chatLink}`)} className={styles.msg_btn}>
-              НАПИСАТЬ
-            </button>
           ) : (
-            <button onClick={() => handleJoin()} className={styles.msg_btn}>
-              ВЛИТЬСЯ
+            <button onClick={handleButtonClick} className={styles.msg_btn}>
+              {getButtonText()}
             </button>
           )}
-
           <ParticipantsBlock
             event_ownerID={event_ownerID}
             members={members}

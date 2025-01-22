@@ -15,11 +15,6 @@ const Event = ({ searchValue, setSearchValue }) => {
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(null);
 
-  // url for test
-  // https://e895c70e3c56e1a7.mokky.dev/events
-
-  // orig url fetch
-
   React.useEffect(() => {
     setLoading(true);
     fetch(`http://localhost:8080/api/events/getById?eventId=${id}`, {
@@ -60,8 +55,6 @@ const Event = ({ searchValue, setSearchValue }) => {
     return <div>{error}</div>;
   }
 
-  const { reqUsers } = eventData;
-
   return (
     <>
       <Header searchValue={searchValue} setSearchValue={setSearchValue} />
@@ -81,7 +74,7 @@ const Event = ({ searchValue, setSearchValue }) => {
           setIsVisibleReq={setIsVisibleReq}
         />
       )}
-      {isVisibleReq && <RequestsBlock eventName={eventData.name} reqUsers={reqUsers} />}
+      {isVisibleReq && <RequestsBlock id={id} eventName={eventData.name} />}
     </>
   );
 };
