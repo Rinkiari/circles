@@ -9,16 +9,15 @@ import profile_icon from '../../assets/profile.png';
 
 const ParticipantsBlock = ({ event_ownerID, members, maxMembersCount, membersCount }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
-
-  console.log('maxmc', maxMembersCount);
-  console.log('mc', membersCount);
-
-  const navigate = useNavigate();
-
   const { authData } = useAuth();
   const myID = authData.user_id;
 
+  const navigate = useNavigate();
+
   const handleProfileClick = (id) => {
+    console.log('event_ownerID', event_ownerID);
+    console.log('myID', myID);
+
     event_ownerID === myID ? navigate('/myprofile') : navigate(`/profile/${id}`);
   };
 

@@ -74,7 +74,9 @@ const Event = ({ searchValue, setSearchValue }) => {
           setIsVisibleReq={setIsVisibleReq}
         />
       )}
-      {isVisibleReq && <RequestsBlock id={id} eventName={eventData.name} />}
+      {isVisibleReq && (
+        <RequestsBlock setIsVisibleReq={setIsVisibleReq} id={id} eventName={eventData.name} />
+      )}
     </>
   );
 };

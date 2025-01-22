@@ -140,14 +140,14 @@ const EventBlock = ({
   const getButtonText = () => {
     switch (requestStatus) {
       case 'REVIEWING':
-        return 'Рассмотрение';
+        return 'РАССМОТРЕНИЕ';
       case 'ACCEPTED':
         return 'НАПИСАТЬ';
       case 'REJECTED':
         return 'Заявка отклонена';
       case 'NO_REQUEST':
       default:
-        return 'Влиться';
+        return 'ВЛИТЬСЯ';
     }
   };
 
