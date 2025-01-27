@@ -1,5 +1,7 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useAuth } from '../context/AuthContext';
+import { setEvents } from '../redux/slices/eventsSlice';
 import '../scss/app.scss';
 
 import Header from '../components/Header';
@@ -7,9 +9,10 @@ import Categories from '../components/Categories';
 import EventCard from '../components/EventCard';
 
 const Home = ({ searchValue, setSearchValue }) => {
+  const dispatch = useDispatch();
   const { authData } = useAuth();
 
-  const [events, setEvents] = React.useState([]);
+  const events = useSelector((state) => state.eventsReducer.events);
 
   const categoriesArr = [
     'ТВОРЧЕСТВО',
@@ -59,7 +62,7 @@ const Home = ({ searchValue, setSearchValue }) => {
                 body: JSON.stringify(smth),
               });
         const data = await response.json();
-        setEvents(data);
+        dispatch(setEvents(data)); // here
       } catch (error) {
         console.error('Ошибка при получении данных:', error);
       }
@@ -69,7 +72,7 @@ const Home = ({ searchValue, setSearchValue }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCategories]);
 
-  const projects = events
+  const searchedEvents = events
     .filter((obj) => {
       if (obj.name.toLowerCase().includes(searchValue.toLowerCase())) {
         return true;
@@ -96,7 +99,7 @@ const Home = ({ searchValue, setSearchValue }) => {
         selectedCategories={selectedCategories}
         onToggleCategory={handleToggleCategory}
       />
-      <div className="event_container">{projects}</div>
+      <div className="event_container">{searchedEvents}</div>
     </>
   );
 };
