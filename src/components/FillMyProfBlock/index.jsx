@@ -167,10 +167,10 @@ const FillMyProfileBlock = () => {
           });
           setActiveCategories(new Set(data.interestNames || []));
         } else {
-          throw new Error('Ошибка загрузки данных пользователя.');
+          throw new Error('Заполните данные...');
         }
       } catch (error) {
-        alert(`Ошибка загрузки: ${error.message}`);
+        alert(`Заполняйте: ${error.message}`);
       }
     };
 
