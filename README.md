@@ -1,73 +1,52 @@
-## Ветки:
+# Circles
 
-- `main`: основная ветка для работы с React-компонентами и логикой / финальная ветка...
-- `html-css`: ветка для работы с HTML и CSS.
+**Circles** — это веб-приложение для организации и участия в мероприятиях. Пользователи могут создавать события, просматривать список доступных мероприятий и присоединяться к ним.
 
-This project was bootstrapped with [Create React App]
+Проект разделён на две части:
+- 🔧 **Бэкенд** — реализован на Java (Spring Boot) и использует базу данных **PostgreSQL**.  
+  Репозиторий бэкенда: [CirclesApp](https://github.com/lenaevd/CirclesApp)
+- 💻 **Фронтенд** — реализован на **React** и подключается к REST API бэкенда.
 
-## Available Scripts
+## 🧰 Используемые технологии
 
-In the project directory, you can run:
+- **React**
+- **React-router-dom**
+- **Redux Toolkit**
+- **JavaScript (ES6+)**
+- **SASS / HTML5**
+- **Node.js + npm**
+- **Java Spring Boot** (бэкенд)
+- **PostgreSQL** (база данных)
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Структура проекта
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```plaintext
+circles/
+│
+├── public/                      # Статические файлы, доступные в браузере
+│   ├── index.html               # Главная страница, подключение скриптов
+│   ├── favicon.ico              # Иконка для вкладки
+│   └── ...
+│
+├── src/                         # Исходный код фронтенд-приложения (React)
+│   ├── assets/                  # Ресурсы проекта (изображения)
+│   ├── components/              # Компоненты React
+│   │   ├── EventCard            # Компонент для отображения карточки события
+│   │   ├── Header               # Шапка сайта
+│   │   └── ...
+│   ├── context/                 # Контексты для глобального состояния приложения
+│   ├── pages/                   # Страницы приложения (главная, события и т.д.)
+│   │   ├── Home.jsx             # Главная страница
+│   │   └── Event.jsx            # Страница конкретного мероприятия
+│   │   └── ...
+│   ├── redux/                   # Логика redux toolkit
+│   ├── App.js                   # Главный компонент, который рендерит страницы
+│   ├── index.js                 # Точка входа для React-приложения
+│   └── styles/                  # Стили для приложения
+│       └── main.css             # Основные стили
+│
+├── .gitignore                   # Файл для игнорирования ненужных файлов в Git
+├── package.json                 # Список зависимостей и скриптов проекта
+└── README.md                    # Описание проекта
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
